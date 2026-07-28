@@ -11,7 +11,7 @@ export function TopBar({ title, showBack, action }: TopBarProps) {
   const navigate = useNavigate()
 
   return (
-    <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-ink-500/10 bg-surface-50/95 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] backdrop-blur">
+    <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-ink-500/10 bg-cream/95 px-4 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] backdrop-blur">
       {showBack && (
         <button
           type="button"
