@@ -9,7 +9,7 @@ export function LiveScoreStrip() {
   )
 
   return (
-    <div className="flex gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none]">
+    <div className="scroll-x-hide flex gap-3 overflow-x-auto px-4 pb-2">
       {featured.map((fixture) => {
         const homeTeam = getTeamById(fixture.homeTeamId)
         const awayTeam = getTeamById(fixture.awayTeamId)
