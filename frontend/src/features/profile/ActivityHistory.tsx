@@ -53,7 +53,7 @@ export function ActivityHistory() {
             <span className="text-sm text-ink-900">{item.label}</span>
           </div>
           {item.kind === 'sponsorship' && (
-            <span className="text-sm font-semibold text-pitch-700">{formatKes(item.amount)}</span>
+            <span className="text-sm font-semibold text-pitch-900">{formatKes(item.amount)}</span>
           )}
         </Card>
       ))}
