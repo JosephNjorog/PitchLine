@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { FixtureListItem } from '../../features/team/FixtureListItem'
@@ -14,7 +14,7 @@ export function TeamFixturesPage() {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
-      <TopBar
+      <PageHeader
         title="Fixtures"
         action={
           <Button size="md" onClick={() => navigate('/team/fixtures/new')}>
