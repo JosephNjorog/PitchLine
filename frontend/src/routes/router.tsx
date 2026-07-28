@@ -1,5 +1,6 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom'
 import { PhoneFrame } from '../components/layout/PhoneFrame'
+import { NarrowLayout } from '../components/layout/NarrowLayout'
 import { DashboardLayout } from '../components/layout/DashboardLayout'
 import { TeamDashboardLayout } from '../components/layout/TeamDashboardLayout'
 import { InstitutionalLayout } from '../components/layout/InstitutionalLayout'
@@ -67,25 +68,35 @@ export const router = createBrowserRouter([
         element: <PhoneFrameLayout />,
         children: [
           { path: '/', element: <LandingPage /> },
-          { path: '/auth', element: <AuthPage /> },
-          { path: '/auth/otp', element: <OtpPage /> },
+          {
+            element: <NarrowLayout />,
+            children: [
+              { path: '/auth', element: <AuthPage /> },
+              { path: '/auth/otp', element: <OtpPage /> },
+            ],
+          },
           {
             element: <RequireAuth />,
             children: [
-              { path: '/onboarding', element: <RoleSelectPage /> },
-              { path: '/onboarding/fan/teams', element: <PickTeamsPage /> },
-              { path: '/onboarding/fan/alerts', element: <AlertPrefsPage /> },
-              { path: '/onboarding/team/details', element: <TeamDetailsPage /> },
-              { path: '/onboarding/team/category', element: <TeamCategoryPage /> },
-              { path: '/onboarding/team/confirm', element: <TeamConfirmPage /> },
-              { path: '/onboarding/institutional/:role/org', element: <OrgDetailsPage /> },
               {
-                path: '/onboarding/institutional/scout/subscription',
-                element: <SubscriptionTrialPage />,
-              },
-              {
-                path: '/onboarding/institutional/league/jurisdiction',
-                element: <JurisdictionTeamsPage />,
+                element: <NarrowLayout />,
+                children: [
+                  { path: '/onboarding', element: <RoleSelectPage /> },
+                  { path: '/onboarding/fan/teams', element: <PickTeamsPage /> },
+                  { path: '/onboarding/fan/alerts', element: <AlertPrefsPage /> },
+                  { path: '/onboarding/team/details', element: <TeamDetailsPage /> },
+                  { path: '/onboarding/team/category', element: <TeamCategoryPage /> },
+                  { path: '/onboarding/team/confirm', element: <TeamConfirmPage /> },
+                  { path: '/onboarding/institutional/:role/org', element: <OrgDetailsPage /> },
+                  {
+                    path: '/onboarding/institutional/scout/subscription',
+                    element: <SubscriptionTrialPage />,
+                  },
+                  {
+                    path: '/onboarding/institutional/league/jurisdiction',
+                    element: <JurisdictionTeamsPage />,
+                  },
+                ],
               },
               {
                 element: <RequireOnboarded />,

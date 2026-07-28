@@ -12,7 +12,9 @@ export function DashboardLayout() {
   return (
     <div className="flex min-h-screen flex-1 flex-col">
       <main className="flex-1 overflow-y-auto pb-4">
-        <Outlet />
+        <div className="mx-auto w-full max-w-2xl">
+          <Outlet />
+        </div>
       </main>
       <ShellNav tabs={TABS} activeClassName="text-pitch-700" />
     </div>

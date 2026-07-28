@@ -35,12 +35,6 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-@media (min-width: 48rem) {
-  body {
-    background-color: #e7e9e4;
-  }
-}
-
 .scroll-x-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
