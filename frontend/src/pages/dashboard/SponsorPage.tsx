@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import {
   SponsorTargetPicker,
@@ -46,7 +46,7 @@ export function SponsorPage() {
 
   return (
     <div className="flex flex-col gap-6 pb-4">
-      <TopBar title="Sponsor a team" />
+      <PageHeader title="Sponsor a team" />
       <div className="flex flex-col gap-6 px-4">
         <SponsorTargetPicker
           selectedTeam={team}
