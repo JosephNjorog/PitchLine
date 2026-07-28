@@ -81,7 +81,7 @@ export function ResultForm({ homeTeam, awayTeam, onSubmit }: ResultFormProps) {
             value={scorerName}
             onChange={(e) => setScorerName(e.target.value)}
             placeholder="Player name"
-            className="flex-1 rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-pitch-700"
+            className="flex-1 rounded-xl border border-ink-500/25 bg-paper px-3 py-2 text-sm outline-none focus:border-pitch-900"
           />
           <Button size="md" onClick={addScorer}>
             Add
@@ -110,12 +110,12 @@ export function ResultForm({ homeTeam, awayTeam, onSubmit }: ResultFormProps) {
             value={cardName}
             onChange={(e) => setCardName(e.target.value)}
             placeholder="Player name"
-            className="flex-1 rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-pitch-700"
+            className="flex-1 rounded-xl border border-ink-500/25 bg-paper px-3 py-2 text-sm outline-none focus:border-pitch-900"
           />
           <select
             value={cardType}
             onChange={(e) => setCardType(e.target.value as 'yellow' | 'red')}
-            className="rounded-xl border border-ink-500/25 bg-surface-0 px-2 py-2 text-sm outline-none"
+            className="rounded-xl border border-ink-500/25 bg-paper px-2 py-2 text-sm outline-none"
           >
             <option value="yellow">Yellow</option>
             <option value="red">Red</option>
@@ -134,7 +134,7 @@ export function ResultForm({ homeTeam, awayTeam, onSubmit }: ResultFormProps) {
           {nominees.map((name) => (
             <span
               key={name}
-              className="flex items-center gap-1.5 rounded-full bg-pitch-700/10 px-3 py-1 text-xs font-medium text-pitch-700"
+              className="flex items-center gap-1.5 rounded-full bg-pitch-900/10 px-3 py-1 text-xs font-medium text-pitch-900"
             >
               {name}
               <button
@@ -152,7 +152,7 @@ export function ResultForm({ homeTeam, awayTeam, onSubmit }: ResultFormProps) {
             value={nomineeName}
             onChange={(e) => setNomineeName(e.target.value)}
             placeholder="Player name"
-            className="flex-1 rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2 text-sm outline-none focus:border-pitch-700"
+            className="flex-1 rounded-xl border border-ink-500/25 bg-paper px-3 py-2 text-sm outline-none focus:border-pitch-900"
           />
           <Button size="md" onClick={addNominee}>
             Add
