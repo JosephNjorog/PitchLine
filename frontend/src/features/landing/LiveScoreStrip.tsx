@@ -1,7 +1,7 @@
 import { FIXTURES, RESULTS, getTeamById } from '../../mock-data'
 import { ScoreCard } from './ScoreCard'
 
-const FEATURED_FIXTURE_IDS = ['fixture-005', 'fixture-001', 'fixture-002', 'fixture-004']
+const FEATURED_FIXTURE_IDS = ['fixture-005', 'fixture-001']
 
 export function LiveScoreStrip() {
   const featured = FEATURED_FIXTURE_IDS.map((id) => FIXTURES.find((f) => f.id === id)).filter(
@@ -9,7 +9,7 @@ export function LiveScoreStrip() {
   )
 
   return (
-    <div className="scroll-x-hide flex gap-3 overflow-x-auto px-4 pb-2">
+    <div className="flex flex-col gap-3">
       {featured.map((fixture) => {
         const homeTeam = getTeamById(fixture.homeTeamId)
         const awayTeam = getTeamById(fixture.awayTeamId)
