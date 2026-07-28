@@ -1,25 +1,16 @@
-import { useRevealOnScroll } from '../../hooks/useRevealOnScroll'
-
 interface AudienceSectionProps {
   icon: string
   title: string
   description: string
-  delayMs?: number
 }
 
-export function AudienceSection({ icon, title, description, delayMs = 0 }: AudienceSectionProps) {
-  const { ref, visible } = useRevealOnScroll<HTMLDivElement>()
-
+export function AudienceSection({ icon, title, description }: AudienceSectionProps) {
   return (
-    <div
-      ref={ref}
-      className={`reveal-on-scroll flex items-start gap-4 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 ${visible ? 'is-visible' : ''}`}
-      style={{ transitionDelay: visible ? `${delayMs}ms` : '0ms' }}
-    >
+    <div className="flex flex-col gap-3 rounded-2xl bg-sand px-6 py-7">
       <span className="text-2xl">{icon}</span>
       <div>
-        <p className="font-semibold text-white">{title}</p>
-        <p className="text-sm text-white/60">{description}</p>
+        <p className="font-semibold text-ink-900">{title}</p>
+        <p className="mt-1 text-sm text-ink-500">{description}</p>
       </div>
     </div>
   )
