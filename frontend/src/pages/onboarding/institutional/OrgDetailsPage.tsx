@@ -65,7 +65,7 @@ export function OrgDetailsPage() {
                     type="button"
                     onClick={() => toggleSport(sport)}
                     className={`rounded-full px-3 py-1.5 text-xs font-medium capitalize ${
-                      active ? 'bg-pitch-700 text-white' : 'bg-ink-500/10 text-ink-500'
+                      active ? 'bg-pitch-900 text-white' : 'bg-ink-500/10 text-ink-500'
                     }`}
                   >
                     {sport}
@@ -76,7 +76,7 @@ export function OrgDetailsPage() {
           </div>
         )}
       </div>
-      <div className="sticky bottom-0 border-t border-ink-500/10 bg-surface-50 px-4 py-3">
+      <div className="sticky bottom-0 border-t border-ink-500/10 bg-cream px-4 py-3">
         <Button size="lg" className="w-full" disabled={!canContinue} onClick={handleContinue}>
           Continue
         </Button>
