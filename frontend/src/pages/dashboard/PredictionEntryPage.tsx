@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { PredictionEntryForm } from '../../features/predictions/PredictionEntryForm'
@@ -29,7 +29,7 @@ export function PredictionEntryPage() {
   if (round.status !== 'open') {
     return (
       <div className="flex flex-col gap-4 pb-4">
-        <TopBar title="Predict the score" showBack />
+        <PageHeader title="Predict the score" showBack />
         <div className="px-4">
           <EmptyState icon="🔒" title="Predictions are closed for this fixture" />
         </div>
@@ -49,7 +49,7 @@ export function PredictionEntryPage() {
 
   return (
     <div className="flex flex-col gap-6 pb-4">
-      <TopBar title="Predict the score" showBack />
+      <PageHeader title="Predict the score" showBack />
       <div className="px-4">
         {submitted ? (
           <EmptyState
