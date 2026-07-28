@@ -39,7 +39,7 @@ export function DiscoverPage() {
         <select
           value={county}
           onChange={(e) => setCounty(e.target.value)}
-          className="rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-3 text-sm outline-none md:w-40"
+          className="rounded-xl border border-ink-500/25 bg-paper px-3 py-3 text-sm outline-none md:w-40"
         >
           <option value="">All counties</option>
           {counties.map((c) => (
@@ -51,7 +51,7 @@ export function DiscoverPage() {
         <select
           value={sport}
           onChange={(e) => setSport(e.target.value as Sport | '')}
-          className="rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-3 text-sm capitalize outline-none md:w-40"
+          className="rounded-xl border border-ink-500/25 bg-paper px-3 py-3 text-sm capitalize outline-none md:w-40"
         >
           <option value="">All sports</option>
           {SPORTS.map((s) => (
@@ -63,7 +63,7 @@ export function DiscoverPage() {
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value as '' | 'standard' | 'adaptive')}
-          className="rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-3 text-sm outline-none md:w-44"
+          className="rounded-xl border border-ink-500/25 bg-paper px-3 py-3 text-sm outline-none md:w-44"
         >
           <option value="">Standard + adaptive</option>
           <option value="standard">Standard only</option>
