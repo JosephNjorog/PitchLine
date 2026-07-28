@@ -17,7 +17,7 @@ export function FollowedTeamsList() {
       {teams.map((team) => (
         <div
           key={team.id}
-          className="flex items-center gap-3 rounded-xl border border-ink-500/15 bg-surface-0 p-3"
+          className="flex items-center gap-3 rounded-xl border border-ink-500/15 bg-paper p-3"
         >
           <Avatar name={team.name} color={team.crestColor} size={36} />
           <div className="min-w-0 flex-1">
