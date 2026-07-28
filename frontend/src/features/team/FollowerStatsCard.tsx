@@ -5,7 +5,7 @@ export function FollowerStatsCard({ team, resultsSubmitted }: { team: Team; resu
   return (
     <Card className="flex flex-col gap-4">
       <div>
-        <p className="text-4xl font-extrabold text-pitch-700">{team.followerCount}</p>
+        <p className="text-4xl font-extrabold text-pitch-900">{team.followerCount}</p>
         <p className="text-sm text-ink-500">
           {team.followerCount === 0 ? 'No followers yet' : 'people following your team'}
         </p>
