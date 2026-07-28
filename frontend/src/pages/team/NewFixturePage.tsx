@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { TeamSearchList } from '../../features/teams/TeamSearchList'
@@ -30,7 +30,7 @@ export function NewFixturePage() {
 
   return (
     <div className="flex flex-1 flex-col">
-      <TopBar title="New fixture" showBack />
+      <PageHeader title="New fixture" showBack />
       <div className="flex flex-1 flex-col gap-4 px-4 py-4">
         <p className="text-sm text-ink-500">Who are you playing?</p>
         <TeamSearchList selectedTeamIds={selectedIds} onToggle={(id) => setOpponentId(id)} />
@@ -47,7 +47,7 @@ export function NewFixturePage() {
           onChange={(e) => setVenue(e.target.value)}
         />
       </div>
-      <div className="sticky bottom-0 border-t border-ink-500/10 bg-surface-50 px-4 py-3">
+      <div className="sticky bottom-0 border-t border-ink-500/10 bg-cream px-4 py-3">
         <Button size="lg" className="w-full" disabled={!canSubmit} onClick={handleSubmit}>
           Create fixture
         </Button>
