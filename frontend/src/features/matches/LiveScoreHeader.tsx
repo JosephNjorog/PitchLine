@@ -16,7 +16,7 @@ export function LiveScoreHeader({ fixture, result, homeTeam, awayTeam }: LiveSco
     fixture.status === 'live' ? 'Live' : fixture.status === 'completed' ? 'Full time' : 'Upcoming'
 
   return (
-    <div className="flex flex-col items-center gap-4 bg-pitch-700 px-4 py-8 text-white">
+    <div className="flex flex-col items-center gap-4 bg-pitch-900 px-4 py-8 text-white">
       <Badge tone={badgeTone}>{badgeLabel}</Badge>
       <div className="flex w-full items-center justify-between">
         <div className="flex flex-1 flex-col items-center gap-2">
