@@ -34,7 +34,7 @@ export function MotmVote({ result }: { result: Result }) {
               className="relative overflow-hidden rounded-xl border border-ink-500/15 px-3 py-2.5 text-left disabled:cursor-default"
             >
               <div
-                className="absolute inset-y-0 left-0 bg-pitch-700/10"
+                className="absolute inset-y-0 left-0 bg-pitch-900/10"
                 style={{ width: `${pct}%` }}
               />
               <div className="relative flex items-center justify-between">
