@@ -13,7 +13,7 @@ export function TeamListItem({ team, selected, onToggle }: TeamListItemProps) {
       type="button"
       onClick={onToggle}
       className={`flex w-full items-center gap-3 rounded-xl border p-3 text-left transition-colors ${
-        selected ? 'border-pitch-700 bg-pitch-700/5' : 'border-ink-500/15 bg-surface-0'
+        selected ? 'border-pitch-900 bg-pitch-900/5' : 'border-ink-500/15 bg-paper'
       }`}
     >
       <Avatar name={team.name} color={team.crestColor} size={36} />
@@ -26,7 +26,7 @@ export function TeamListItem({ team, selected, onToggle }: TeamListItemProps) {
       </div>
       <span
         className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 text-xs text-white ${
-          selected ? 'border-pitch-700 bg-pitch-700' : 'border-ink-500/30 bg-transparent'
+          selected ? 'border-pitch-900 bg-pitch-900' : 'border-ink-500/30 bg-transparent'
         }`}
       >
         {selected ? '✓' : ''}
