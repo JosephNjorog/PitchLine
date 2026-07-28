@@ -14,7 +14,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={inputId}
-          className={`w-full rounded-xl border border-ink-500/25 bg-surface-0 px-4 py-3 text-base text-ink-900 outline-none placeholder:text-ink-500 focus:border-pitch-700 focus:ring-2 focus:ring-pitch-700/20 ${className}`}
+          className={`w-full rounded-xl border border-transparent bg-sand px-4 py-3 text-base text-ink-900 outline-none placeholder:text-ink-500 focus:border-pitch-900/30 focus:ring-2 focus:ring-pitch-900/15 ${className}`}
           {...rest}
         />
         {hint && <span className="text-xs text-ink-500">{hint}</span>}
