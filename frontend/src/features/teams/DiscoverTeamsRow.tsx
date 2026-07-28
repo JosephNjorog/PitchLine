@@ -12,14 +12,14 @@ export function DiscoverTeamsRow() {
 
   return (
     <section className="flex flex-col gap-3">
-      <h2 className="px-4 text-sm font-bold uppercase tracking-wide text-ink-500">
+      <h2 className="text-sm font-bold uppercase tracking-wide text-ink-500">
         Discover new teams
       </h2>
-      <div className="scroll-x-hide flex gap-3 overflow-x-auto px-4 pb-2">
+      <div className="scroll-x-hide flex gap-3 overflow-x-auto pb-2">
         {discoverable.map((team) => (
           <div
             key={team.id}
-            className="flex w-36 shrink-0 flex-col items-center gap-2 rounded-2xl bg-surface-0 p-3 text-center shadow-card"
+            className="flex w-36 shrink-0 flex-col items-center gap-2 rounded-2xl border border-border bg-paper p-3 text-center"
           >
             <Link
               to={`/dashboard/team/${team.id}`}
