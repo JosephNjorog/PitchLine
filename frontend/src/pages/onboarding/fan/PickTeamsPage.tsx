@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../../components/ui/Button'
 import { TopBar } from '../../../components/layout/TopBar'
-import { TeamSearchList } from '../../../features/onboarding/fan/TeamSearchList'
+import { TeamSearchList } from '../../../features/teams/TeamSearchList'
 import { useOnboarding } from '../../../context/OnboardingContext'
 
 export function PickTeamsPage() {

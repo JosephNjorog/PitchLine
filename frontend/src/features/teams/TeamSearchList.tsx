@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
-import { SearchBar } from '../../../components/ui/SearchBar'
-import { searchTeams, getCounties } from '../../../mock-data'
+import { SearchBar } from '../../components/ui/SearchBar'
+import { searchTeams, getCounties } from '../../mock-data'
 import { TeamListItem } from './TeamListItem'
 
 interface TeamSearchListProps {
@@ -24,7 +24,7 @@ export function TeamSearchList({ selectedTeamIds, onToggle }: TeamSearchListProp
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="scroll-x-hide flex gap-2 overflow-x-auto pb-1">
         <button
           type="button"
           onClick={() => setCounty('')}

@@ -3,10 +3,11 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
 import { useAuth } from '../../context/AuthContext'
+import { dashboardPathForRole } from '../../lib/roleRouting'
 
 export function OtpPage() {
   const navigate = useNavigate()
-  const { pendingPhone, verifyOtp, onboardingComplete } = useAuth()
+  const { pendingPhone, verifyOtp, onboardingComplete, user } = useAuth()
   const [code, setCode] = useState('')
   const [error, setError] = useState(false)
 
@@ -18,7 +19,7 @@ export function OtpPage() {
       setError(true)
       return
     }
-    navigate(onboardingComplete ? '/dashboard' : '/onboarding', { replace: true })
+    navigate(onboardingComplete ? dashboardPathForRole(user?.role) : '/onboarding', { replace: true })
   }
 
   return (

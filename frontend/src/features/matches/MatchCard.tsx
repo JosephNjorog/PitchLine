@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Avatar } from '../../components/ui/Avatar'
 import { Badge } from '../../components/ui/Badge'
 import { formatKickoff, formatRelativeTime } from '../../lib/date'
@@ -17,10 +17,14 @@ export function MatchCard({ fixture }: { fixture: Fixture }) {
     fixture.status === 'live' ? 'Live' : fixture.status === 'completed' ? 'Full time' : 'Upcoming'
 
   return (
-    <button
-      type="button"
+    <div
+      role="button"
+      tabIndex={0}
       onClick={() => navigate(`/dashboard/match/${fixture.id}`)}
-      className="flex w-full flex-col gap-3 rounded-2xl bg-surface-0 p-4 text-left shadow-card"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') navigate(`/dashboard/match/${fixture.id}`)
+      }}
+      className="flex w-full cursor-pointer flex-col gap-3 rounded-2xl bg-surface-0 p-4 text-left shadow-card"
     >
       <div className="flex items-center justify-between">
         <Badge tone={badgeTone}>{badgeLabel}</Badge>
@@ -29,23 +33,31 @@ export function MatchCard({ fixture }: { fixture: Fixture }) {
         </span>
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link
+          to={`/dashboard/team/${homeTeam.id}`}
+          onClick={(e) => e.stopPropagation()}
+          className="flex items-center gap-2"
+        >
           <Avatar name={homeTeam.name} color={homeTeam.crestColor} size={28} />
           <span className="text-sm font-medium text-ink-900">{homeTeam.name}</span>
-        </div>
+        </Link>
         <span className="text-sm font-bold text-ink-900">
           {result ? result.homeScore : ''}
         </span>
       </div>
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link
+          to={`/dashboard/team/${awayTeam.id}`}
+          onClick={(e) => e.stopPropagation()}
+          className="flex items-center gap-2"
+        >
           <Avatar name={awayTeam.name} color={awayTeam.crestColor} size={28} />
           <span className="text-sm font-medium text-ink-900">{awayTeam.name}</span>
-        </div>
+        </Link>
         <span className="text-sm font-bold text-ink-900">
           {result ? result.awayScore : ''}
         </span>
       </div>
-    </button>
+    </div>
   )
 }

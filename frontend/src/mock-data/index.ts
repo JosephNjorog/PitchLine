@@ -7,6 +7,8 @@ import { LEADERBOARD_ENTRIES } from './leaderboard'
 
 export { TEAMS, FIXTURES, RESULTS, PREDICTION_ROUNDS, LEADERBOARD_ENTRIES }
 
+export const SPORTS: Sport[] = ['football', 'rugby', 'basketball', 'volleyball', 'netball', 'athletics']
+
 export function getTeamById(id: string) {
   return TEAMS.find((team) => team.id === id)
 }

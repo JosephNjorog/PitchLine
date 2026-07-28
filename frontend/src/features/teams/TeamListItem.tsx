@@ -1,5 +1,5 @@
-import { Avatar } from '../../../components/ui/Avatar'
-import type { Team } from '../../../types'
+import { Avatar } from '../../components/ui/Avatar'
+import type { Team } from '../../types'
 
 interface TeamListItemProps {
   team: Team

@@ -14,18 +14,18 @@ export function RoleSelectPage() {
         <RoleCard
           icon="📋"
           label="I coach or manage a team"
-          onClick={() => navigate('/onboarding/coming-soon/team')}
+          onClick={() => navigate('/onboarding/team/details')}
         />
         <RoleCard icon="🙌" label="I'm a fan" onClick={() => navigate('/onboarding/fan/teams')} />
         <RoleCard
           icon="🔎"
           label="I'm a scout or from an academy"
-          onClick={() => navigate('/onboarding/coming-soon/scout')}
+          onClick={() => navigate('/onboarding/institutional/scout/org')}
         />
         <RoleCard
           icon="🏛️"
           label="I represent a league, school, or federation"
-          onClick={() => navigate('/onboarding/coming-soon/league')}
+          onClick={() => navigate('/onboarding/institutional/league/org')}
         />
       </div>
     </div>

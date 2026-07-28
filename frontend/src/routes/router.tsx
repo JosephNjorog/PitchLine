@@ -1,9 +1,11 @@
 import { createBrowserRouter, Outlet } from 'react-router-dom'
-import { AppShell } from '../components/layout/AppShell'
+import { PhoneFrame } from '../components/layout/PhoneFrame'
 import { DashboardLayout } from '../components/layout/DashboardLayout'
+import { TeamDashboardLayout } from '../components/layout/TeamDashboardLayout'
+import { InstitutionalLayout } from '../components/layout/InstitutionalLayout'
 import { RequireAuth } from '../components/RequireAuth'
 import { RequireOnboarded } from '../components/RequireOnboarded'
-import { RequireFanRole } from '../components/RequireFanRole'
+import { RequireRole } from '../components/RequireRole'
 
 import { LandingPage } from '../pages/landing/LandingPage'
 import { AuthPage } from '../pages/auth/AuthPage'
@@ -11,7 +13,13 @@ import { OtpPage } from '../pages/auth/OtpPage'
 import { RoleSelectPage } from '../pages/onboarding/RoleSelectPage'
 import { PickTeamsPage } from '../pages/onboarding/fan/PickTeamsPage'
 import { AlertPrefsPage } from '../pages/onboarding/fan/AlertPrefsPage'
-import { ComingSoonPage } from '../pages/coming-soon/ComingSoonPage'
+import { TeamDetailsPage } from '../pages/onboarding/team/TeamDetailsPage'
+import { TeamCategoryPage } from '../pages/onboarding/team/TeamCategoryPage'
+import { TeamConfirmPage } from '../pages/onboarding/team/TeamConfirmPage'
+import { OrgDetailsPage } from '../pages/onboarding/institutional/OrgDetailsPage'
+import { SubscriptionTrialPage } from '../pages/onboarding/institutional/SubscriptionTrialPage'
+import { JurisdictionTeamsPage } from '../pages/onboarding/institutional/JurisdictionTeamsPage'
+
 import { HomePage } from '../pages/dashboard/HomePage'
 import { MatchPage } from '../pages/dashboard/MatchPage'
 import { PredictionsPage } from '../pages/dashboard/PredictionsPage'
@@ -19,13 +27,35 @@ import { PredictionEntryPage } from '../pages/dashboard/PredictionEntryPage'
 import { SponsorPage } from '../pages/dashboard/SponsorPage'
 import { SponsorReceiptPage } from '../pages/dashboard/SponsorReceiptPage'
 import { ProfilePage } from '../pages/dashboard/ProfilePage'
+import { TeamProfilePage } from '../pages/dashboard/TeamProfilePage'
+
+import { TeamHomePage } from '../pages/team/TeamHomePage'
+import { TeamFixturesPage } from '../pages/team/TeamFixturesPage'
+import { NewFixturePage } from '../pages/team/NewFixturePage'
+import { SubmitResultPage } from '../pages/team/SubmitResultPage'
+import { FollowersPage } from '../pages/team/FollowersPage'
+import { TeamProfilePage as TeamOwnProfilePage } from '../pages/team/TeamProfilePage'
+
+import { IndexRedirect } from '../pages/institutional/IndexRedirect'
+import { DiscoverPage } from '../pages/institutional/DiscoverPage'
+import { ManagePage } from '../pages/institutional/ManagePage'
+import { AccountPage } from '../pages/institutional/AccountPage'
+
 import { NotFoundPage } from '../pages/NotFoundPage'
 
 function RootLayout() {
   return (
-    <AppShell>
+    <div className="min-h-screen w-full">
       <Outlet />
-    </AppShell>
+    </div>
+  )
+}
+
+function PhoneFrameLayout() {
+  return (
+    <PhoneFrame>
+      <Outlet />
+    </PhoneFrame>
   )
 }
 
@@ -33,35 +63,92 @@ export const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
-      { path: '/', element: <LandingPage /> },
-      { path: '/auth', element: <AuthPage /> },
-      { path: '/auth/otp', element: <OtpPage /> },
+      {
+        element: <PhoneFrameLayout />,
+        children: [
+          { path: '/', element: <LandingPage /> },
+          { path: '/auth', element: <AuthPage /> },
+          { path: '/auth/otp', element: <OtpPage /> },
+          {
+            element: <RequireAuth />,
+            children: [
+              { path: '/onboarding', element: <RoleSelectPage /> },
+              { path: '/onboarding/fan/teams', element: <PickTeamsPage /> },
+              { path: '/onboarding/fan/alerts', element: <AlertPrefsPage /> },
+              { path: '/onboarding/team/details', element: <TeamDetailsPage /> },
+              { path: '/onboarding/team/category', element: <TeamCategoryPage /> },
+              { path: '/onboarding/team/confirm', element: <TeamConfirmPage /> },
+              { path: '/onboarding/institutional/:role/org', element: <OrgDetailsPage /> },
+              {
+                path: '/onboarding/institutional/scout/subscription',
+                element: <SubscriptionTrialPage />,
+              },
+              {
+                path: '/onboarding/institutional/league/jurisdiction',
+                element: <JurisdictionTeamsPage />,
+              },
+              {
+                element: <RequireOnboarded />,
+                children: [
+                  {
+                    element: <RequireRole allow={['fan']} />,
+                    children: [
+                      {
+                        element: <DashboardLayout />,
+                        children: [
+                          { path: '/dashboard', element: <HomePage /> },
+                          { path: '/dashboard/match/:id', element: <MatchPage /> },
+                          { path: '/dashboard/team/:id', element: <TeamProfilePage /> },
+                          { path: '/dashboard/predictions', element: <PredictionsPage /> },
+                          {
+                            path: '/dashboard/predictions/:roundId/enter',
+                            element: <PredictionEntryPage />,
+                          },
+                          { path: '/dashboard/sponsor', element: <SponsorPage /> },
+                          { path: '/dashboard/sponsor/receipt/:id', element: <SponsorReceiptPage /> },
+                          { path: '/dashboard/profile', element: <ProfilePage /> },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    element: <RequireRole allow={['team']} />,
+                    children: [
+                      {
+                        element: <TeamDashboardLayout />,
+                        children: [
+                          { path: '/team', element: <TeamHomePage /> },
+                          { path: '/team/fixtures', element: <TeamFixturesPage /> },
+                          { path: '/team/fixtures/new', element: <NewFixturePage /> },
+                          { path: '/team/fixtures/:id/result', element: <SubmitResultPage /> },
+                          { path: '/team/followers', element: <FollowersPage /> },
+                          { path: '/team/profile', element: <TeamOwnProfilePage /> },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
       {
         element: <RequireAuth />,
         children: [
-          { path: '/onboarding', element: <RoleSelectPage /> },
-          { path: '/onboarding/fan/teams', element: <PickTeamsPage /> },
-          { path: '/onboarding/fan/alerts', element: <AlertPrefsPage /> },
-          { path: '/onboarding/coming-soon/:role', element: <ComingSoonPage /> },
           {
             element: <RequireOnboarded />,
             children: [
               {
-                element: <RequireFanRole />,
+                element: <RequireRole allow={['scout', 'league']} />,
                 children: [
                   {
-                    element: <DashboardLayout />,
+                    element: <InstitutionalLayout />,
                     children: [
-                      { path: '/dashboard', element: <HomePage /> },
-                      { path: '/dashboard/match/:id', element: <MatchPage /> },
-                      { path: '/dashboard/predictions', element: <PredictionsPage /> },
-                      {
-                        path: '/dashboard/predictions/:roundId/enter',
-                        element: <PredictionEntryPage />,
-                      },
-                      { path: '/dashboard/sponsor', element: <SponsorPage /> },
-                      { path: '/dashboard/sponsor/receipt/:id', element: <SponsorReceiptPage /> },
-                      { path: '/dashboard/profile', element: <ProfilePage /> },
+                      { path: '/institutional', element: <IndexRedirect /> },
+                      { path: '/institutional/discover', element: <DiscoverPage /> },
+                      { path: '/institutional/manage', element: <ManagePage /> },
+                      { path: '/institutional/account', element: <AccountPage /> },
                     ],
                   },
                 ],
