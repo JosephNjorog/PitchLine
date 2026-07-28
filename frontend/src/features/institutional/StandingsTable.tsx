@@ -46,7 +46,7 @@ export function StandingsTable() {
         <select
           value={sport}
           onChange={(e) => setSport(e.target.value as Sport | '')}
-          className="flex-1 rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2 text-sm capitalize outline-none"
+          className="flex-1 rounded-xl border border-ink-500/25 bg-paper px-3 py-2 text-sm capitalize outline-none"
         >
           <option value="">All sports</option>
           {SPORTS.map((s) => (
@@ -58,7 +58,7 @@ export function StandingsTable() {
         <select
           value={county}
           onChange={(e) => setCounty(e.target.value)}
-          className="flex-1 rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2 text-sm outline-none"
+          className="flex-1 rounded-xl border border-ink-500/25 bg-paper px-3 py-2 text-sm outline-none"
         >
           <option value="">All counties</option>
           {counties.map((c) => (
