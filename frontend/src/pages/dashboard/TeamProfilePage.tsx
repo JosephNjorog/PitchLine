@@ -1,5 +1,5 @@
 import { Navigate, useParams } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { EmptyState } from '../../components/ui/EmptyState'
@@ -20,7 +20,7 @@ export function TeamProfilePage() {
 
   return (
     <div className="flex flex-col gap-6 pb-4">
-      <TopBar title={team.name} showBack />
+      <PageHeader title={team.name} showBack />
       <div className="flex items-center gap-3 px-4">
         <Avatar name={team.name} color={team.crestColor} size={56} />
         <div className="flex-1">
