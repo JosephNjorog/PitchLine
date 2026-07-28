@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
@@ -20,7 +20,7 @@ export function TeamProfilePage() {
 
   return (
     <div className="flex flex-col gap-6 pb-4">
-      <TopBar title="Team profile" />
+      <PageHeader title="Team profile" />
       <div className="flex items-center gap-3 px-4">
         <Avatar name={myTeam.name} color={myTeam.crestColor} size={56} />
         <div>
