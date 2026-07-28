@@ -19,7 +19,7 @@ export function AmountPicker({ amount, onChange }: AmountPickerProps) {
             onClick={() => onChange(preset)}
             className={`rounded-xl border px-3 py-3 text-sm font-semibold ${
               amount === preset
-                ? 'border-pitch-700 bg-pitch-700 text-white'
+                ? 'border-pitch-900 bg-pitch-900 text-white'
                 : 'border-ink-500/20 text-ink-900'
             }`}
           >
@@ -35,7 +35,7 @@ export function AmountPicker({ amount, onChange }: AmountPickerProps) {
           inputMode="numeric"
           value={amount || ''}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="w-full rounded-xl border border-ink-500/25 bg-surface-0 px-4 py-3 text-base text-ink-900 outline-none focus:border-pitch-700 focus:ring-2 focus:ring-pitch-700/20"
+          className="w-full rounded-xl border border-ink-500/25 bg-paper px-4 py-3 text-base text-ink-900 outline-none focus:border-pitch-900 focus:ring-2 focus:ring-pitch-900/20"
         />
       </label>
     </div>
