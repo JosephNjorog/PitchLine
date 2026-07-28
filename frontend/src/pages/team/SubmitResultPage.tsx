@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { ResultForm } from '../../features/team/ResultForm'
 import { getTeamById } from '../../mock-data'
 import { useMyTeam } from '../../context/MyTeamContext'
@@ -20,7 +20,7 @@ export function SubmitResultPage() {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
-      <TopBar title="Submit result" showBack />
+      <PageHeader title="Submit result" showBack />
       <div className="px-4">
         <ResultForm
           homeTeam={myTeam}

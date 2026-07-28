@@ -1,4 +1,4 @@
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { FollowerStatsCard } from '../../features/team/FollowerStatsCard'
 import { useMyTeam } from '../../context/MyTeamContext'
@@ -10,7 +10,7 @@ export function FollowersPage() {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
-      <TopBar title="Followers" />
+      <PageHeader title="Followers" />
       <div className="px-4">
         {myTeam ? (
           <FollowerStatsCard team={myTeam} resultsSubmitted={results.length} />

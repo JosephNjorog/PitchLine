@@ -8,7 +8,7 @@ export function FollowedResultsSection() {
   const fixtures = getCompletedFixtures(followedTeamIds)
 
   return (
-    <section className="flex flex-col gap-3 px-4">
+    <section className="flex flex-col gap-3">
       <h2 className="text-sm font-bold uppercase tracking-wide text-ink-500">Latest results</h2>
       {fixtures.length === 0 ? (
         <EmptyState

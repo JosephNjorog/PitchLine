@@ -29,7 +29,7 @@ export function TeamSearchList({ selectedTeamIds, onToggle }: TeamSearchListProp
           type="button"
           onClick={() => setCounty('')}
           className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
-            county === '' ? 'bg-pitch-700 text-white' : 'bg-ink-500/10 text-ink-500'
+            county === '' ? 'bg-pitch-900 text-white' : 'bg-ink-500/10 text-ink-500'
           }`}
         >
           All counties
@@ -40,7 +40,7 @@ export function TeamSearchList({ selectedTeamIds, onToggle }: TeamSearchListProp
             type="button"
             onClick={() => setCounty(c)}
             className={`shrink-0 rounded-full px-3 py-1.5 text-xs font-medium ${
-              county === c ? 'bg-pitch-700 text-white' : 'bg-ink-500/10 text-ink-500'
+              county === c ? 'bg-pitch-900 text-white' : 'bg-ink-500/10 text-ink-500'
             }`}
           >
             {c}

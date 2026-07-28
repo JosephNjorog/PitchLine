@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { LiveScoreHeader } from '../../features/matches/LiveScoreHeader'
 import { MotmVote } from '../../features/matches/MotmVote'
@@ -36,7 +36,7 @@ export function MatchPage() {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
-      <TopBar
+      <PageHeader
         title="Match"
         showBack
         action={

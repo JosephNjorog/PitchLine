@@ -8,7 +8,7 @@ export function SearchBar({ className = '', ...rest }: InputHTMLAttributes<HTMLI
       </span>
       <input
         type="search"
-        className="w-full rounded-xl border border-ink-500/25 bg-surface-0 py-3 pl-10 pr-4 text-base text-ink-900 outline-none placeholder:text-ink-500 focus:border-pitch-700 focus:ring-2 focus:ring-pitch-700/20"
+        className="w-full rounded-xl border border-transparent bg-sand py-3 pl-10 pr-4 text-base text-ink-900 outline-none placeholder:text-ink-500 focus:border-pitch-900/30 focus:ring-2 focus:ring-pitch-900/15"
         {...rest}
       />
     </div>

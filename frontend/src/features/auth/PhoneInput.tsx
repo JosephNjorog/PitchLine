@@ -8,13 +8,12 @@ interface PhoneInputProps {
 export function PhoneInput({ value, onChange }: PhoneInputProps) {
   return (
     <Input
-      label="Phone number"
       type="tel"
       inputMode="tel"
-      placeholder="07XX XXX XXX"
+      placeholder="Phone number"
+      aria-label="Phone number"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      hint="We'll text you a one-time code."
     />
   )
 }

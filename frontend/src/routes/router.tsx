@@ -68,20 +68,15 @@ export const router = createBrowserRouter([
         element: <PhoneFrameLayout />,
         children: [
           { path: '/', element: <LandingPage /> },
-          {
-            element: <NarrowLayout />,
-            children: [
-              { path: '/auth', element: <AuthPage /> },
-              { path: '/auth/otp', element: <OtpPage /> },
-            ],
-          },
+          { path: '/auth', element: <AuthPage /> },
+          { path: '/auth/otp', element: <OtpPage /> },
           {
             element: <RequireAuth />,
             children: [
+              { path: '/onboarding', element: <RoleSelectPage /> },
               {
                 element: <NarrowLayout />,
                 children: [
-                  { path: '/onboarding', element: <RoleSelectPage /> },
                   { path: '/onboarding/fan/teams', element: <PickTeamsPage /> },
                   { path: '/onboarding/fan/alerts', element: <AlertPrefsPage /> },
                   { path: '/onboarding/team/details', element: <TeamDetailsPage /> },

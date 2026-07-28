@@ -63,7 +63,7 @@ export function CreateFixtureForm() {
           <select
             value={homeTeamId}
             onChange={(e) => setHomeTeamId(e.target.value)}
-            className="w-full rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2.5 text-sm outline-none focus:border-pitch-700"
+            className="w-full rounded-xl border border-ink-500/25 bg-paper px-3 py-2.5 text-sm outline-none focus:border-pitch-900"
           >
             <option value="">Select team</option>
             {eligibleTeams.map((t) => (
@@ -78,7 +78,7 @@ export function CreateFixtureForm() {
           <select
             value={awayTeamId}
             onChange={(e) => setAwayTeamId(e.target.value)}
-            className="w-full rounded-xl border border-ink-500/25 bg-surface-0 px-3 py-2.5 text-sm outline-none focus:border-pitch-700"
+            className="w-full rounded-xl border border-ink-500/25 bg-paper px-3 py-2.5 text-sm outline-none focus:border-pitch-900"
           >
             <option value="">Select team</option>
             {eligibleTeams

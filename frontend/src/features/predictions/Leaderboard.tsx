@@ -19,7 +19,7 @@ export function Leaderboard() {
             <span className="w-5 text-sm font-bold text-ink-500">{entry.rank}</span>
             <span className="text-sm font-medium text-ink-900">{entry.displayName}</span>
           </div>
-          <span className="text-sm font-semibold text-pitch-700">{entry.points} pts</span>
+          <span className="text-sm font-semibold text-pitch-900">{entry.points} pts</span>
         </div>
       ))}
       <div className="flex items-center justify-between pt-2.5">
@@ -27,7 +27,7 @@ export function Leaderboard() {
           <span className="w-5 text-sm font-bold text-ink-500">—</span>
           <span className="text-sm font-medium text-ink-900">{user?.name ?? 'You'}</span>
         </div>
-        <span className="text-sm font-semibold text-pitch-700">{myPoints} pts</span>
+        <span className="text-sm font-semibold text-pitch-900">{myPoints} pts</span>
       </div>
     </Card>
   )

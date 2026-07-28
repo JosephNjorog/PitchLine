@@ -29,7 +29,7 @@ export function JurisdictionTeamsPage() {
         </p>
         <TeamSearchList selectedTeamIds={jurisdictionTeamIds} onToggle={toggleJurisdictionTeam} />
       </div>
-      <div className="sticky bottom-0 flex gap-2 border-t border-ink-500/10 bg-surface-50 px-4 py-3">
+      <div className="sticky bottom-0 flex gap-2 border-t border-ink-500/10 bg-cream px-4 py-3">
         <Button variant="secondary" className="flex-1" onClick={finish}>
           Skip for now
         </Button>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { OpenRoundsList } from '../../features/predictions/OpenRoundsList'
 import { Leaderboard } from '../../features/predictions/Leaderboard'
 import { PastResultsList } from '../../features/predictions/PastResultsList'
@@ -17,7 +17,7 @@ export function PredictionsPage() {
 
   return (
     <div className="flex flex-col gap-4 pb-4">
-      <TopBar title="Predictions" />
+      <PageHeader title="Predictions" />
       <p className="px-4 text-xs text-ink-500">
         Free to play — predict scores for fun, no entry fee, no payout.
       </p>
@@ -28,7 +28,7 @@ export function PredictionsPage() {
             type="button"
             onClick={() => setTab(t.id)}
             className={`flex-1 rounded-full px-3 py-2 text-xs font-semibold ${
-              tab === t.id ? 'bg-pitch-700 text-white' : 'bg-ink-500/10 text-ink-500'
+              tab === t.id ? 'bg-pitch-900 text-white' : 'bg-ink-500/10 text-ink-500'
             }`}
           >
             {t.label}

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { FollowedTeamsList } from '../../features/teams/FollowedTeamsList'
@@ -18,7 +18,7 @@ export function ProfilePage() {
 
   return (
     <div className="flex flex-col gap-6 pb-4">
-      <TopBar title="Profile" />
+      <PageHeader title="Profile" />
       <div className="flex items-center gap-3 px-4">
         <Avatar name={user?.name ?? 'Fan'} size={56} />
         <div>

@@ -20,7 +20,7 @@ export function Toggle({ checked, onChange, label, description, disabled }: Togg
         disabled={disabled}
         onClick={() => onChange(!checked)}
         className={`relative h-7 w-12 shrink-0 rounded-full transition-colors disabled:opacity-50 ${
-          checked ? 'bg-pitch-700' : 'bg-ink-500/30'
+          checked ? 'bg-pitch-900' : 'bg-ink-500/30'
         }`}
       >
         <span

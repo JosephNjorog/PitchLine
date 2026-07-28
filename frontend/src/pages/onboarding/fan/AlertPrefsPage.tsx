@@ -39,7 +39,7 @@ export function AlertPrefsPage() {
           />
         </Card>
       </div>
-      <div className="sticky bottom-0 border-t border-ink-500/10 bg-surface-50 px-4 py-3">
+      <div className="sticky bottom-0 border-t border-ink-500/10 bg-cream px-4 py-3">
         <Button size="lg" className="w-full" onClick={handleFinish}>
           Finish
         </Button>

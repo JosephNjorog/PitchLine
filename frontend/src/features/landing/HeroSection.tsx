@@ -1,60 +1,31 @@
 import { useNavigate } from 'react-router-dom'
-import { Button } from '../../components/ui/Button'
-import { Logo } from '../../components/ui/Logo'
-import { AnimatedWords } from './AnimatedWords'
-import { HeroBackdrop } from './HeroBackdrop'
 import { LiveScoreStrip } from './LiveScoreStrip'
 
 export function HeroSection() {
   const navigate = useNavigate()
 
   return (
-    <HeroBackdrop>
-      <div className="flex flex-col gap-8 px-6 pb-8 pt-14 text-center sm:pt-20">
-        <div>
-          <div
-            className="mx-auto opacity-0"
-            style={{ animation: 'word-appear 0.8s ease-out forwards', animationDelay: '0ms' }}
-          >
-            <Logo size={44} />
-          </div>
-          <h2 className="mt-4 text-xs font-mono uppercase tracking-[0.2em] text-white/60">
-            <AnimatedWords text="Every match. Every county." startDelay={100} />
-          </h2>
-          <div
-            className="mx-auto mt-4 h-px w-14 bg-gradient-to-r from-transparent via-sun-500/60 to-transparent opacity-0"
-            style={{ animation: 'word-appear 1s ease-out forwards', animationDelay: '900ms' }}
-          />
-        </div>
-
-        <h1 className="mx-auto max-w-md">
-          <span className="hero-underline mb-3 block text-3xl font-extrabold leading-tight text-white sm:text-4xl">
-            <AnimatedWords text="Grassroots sport," startDelay={1000} />
-          </span>
-          <span className="block text-lg font-light leading-snug text-white/70 sm:text-xl">
-            <AnimatedWords text="real teams, real fans, right on your phone." startDelay={1600} stagger={90} />
-          </span>
+    <section
+      id="live-scores"
+      className="grid grid-cols-1 gap-10 px-5 py-10 sm:px-8 sm:py-16 md:grid-cols-2 md:items-center md:gap-16"
+    >
+      <div className="flex flex-col gap-5">
+        <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-ink-900 sm:text-5xl">
+          Grassroots sport,
+          <br />
+          right on your phone
         </h1>
-
-        <div
-          className="opacity-0"
-          style={{ animation: 'word-appear 1s ease-out forwards', animationDelay: '3200ms' }}
+        <p className="text-lg text-ink-500">Follow real teams and results, from any phone.</p>
+        <button
+          type="button"
+          onClick={() => navigate('/auth')}
+          className="inline-flex w-fit items-center justify-center rounded-xl border border-border bg-paper px-6 py-3.5 text-base font-semibold text-ink-900 hover:bg-sand"
         >
-          <LiveScoreStrip />
-        </div>
-
-        <div
-          className="flex flex-col items-center gap-3 opacity-0"
-          style={{ animation: 'word-appear 0.8s ease-out forwards', animationDelay: '3600ms' }}
-        >
-          <Button size="lg" className="w-full max-w-xs" onClick={() => navigate('/auth')}>
-            Get started
-          </Button>
-          <p className="text-xs uppercase tracking-[0.15em] text-white/40">
-            Follow · Vote · Back your team
-          </p>
-        </div>
+          Continue with Google
+        </button>
       </div>
-    </HeroBackdrop>
+
+      <LiveScoreStrip />
+    </section>
   )
 }

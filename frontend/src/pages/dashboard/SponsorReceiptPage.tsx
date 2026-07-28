@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
-import { TopBar } from '../../components/layout/TopBar'
+import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { FeeSplitBreakdown } from '../../features/sponsorship/FeeSplitBreakdown'
 import { useActivity } from '../../context/ActivityContext'
@@ -14,7 +14,7 @@ export function SponsorReceiptPage() {
 
   return (
     <div className="flex flex-col gap-6 pb-4">
-      <TopBar title="Receipt" />
+      <PageHeader title="Receipt" />
       <div className="flex flex-col items-center gap-2 px-4 text-center">
         <span className="text-4xl">🙌</span>
         <h1 className="text-lg font-bold text-ink-900">Thank you for the support!</h1>

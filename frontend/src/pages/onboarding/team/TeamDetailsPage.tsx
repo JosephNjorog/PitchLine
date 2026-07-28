@@ -27,7 +27,7 @@ export function TeamDetailsPage() {
           <select
             value={teamDraft.sport}
             onChange={(e) => updateTeamDraft({ sport: e.target.value as Sport })}
-            className="w-full rounded-xl border border-ink-500/25 bg-surface-0 px-4 py-3 text-base text-ink-900 outline-none focus:border-pitch-700 focus:ring-2 focus:ring-pitch-700/20"
+            className="w-full rounded-xl border border-ink-500/25 bg-paper px-4 py-3 text-base text-ink-900 outline-none focus:border-pitch-900 focus:ring-2 focus:ring-pitch-900/20"
           >
             {SPORTS.map((sport) => (
               <option key={sport} value={sport}>
@@ -43,7 +43,7 @@ export function TeamDetailsPage() {
           onChange={(e) => updateTeamDraft({ county: e.target.value })}
         />
       </div>
-      <div className="sticky bottom-0 border-t border-ink-500/10 bg-surface-50 px-4 py-3">
+      <div className="sticky bottom-0 border-t border-ink-500/10 bg-cream px-4 py-3">
         <Button
           size="lg"
           className="w-full"

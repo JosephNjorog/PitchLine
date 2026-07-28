@@ -1,6 +1,10 @@
 import { Navigate } from 'react-router-dom'
+import { SiteCard } from '../../components/layout/SiteCard'
+import { LandingNav } from '../../features/landing/LandingNav'
 import { HeroSection } from '../../features/landing/HeroSection'
 import { AudienceSection } from '../../features/landing/AudienceSection'
+import { TrustedBySection } from '../../features/landing/TrustedBySection'
+import { LandingFooter } from '../../features/landing/LandingFooter'
 import { useAuth } from '../../context/AuthContext'
 import { dashboardPathForRole } from '../../lib/roleRouting'
 
@@ -11,9 +15,11 @@ export function LandingPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-1 flex-col bg-gradient-to-b from-ink-900 to-pitch-900">
+    <SiteCard>
+      <LandingNav />
       <HeroSection />
-      <div className="flex flex-col gap-3 px-4 py-8">
+
+      <div id="for-coaches" className="grid grid-cols-1 gap-4 px-5 pb-10 sm:px-8 md:grid-cols-3">
         <AudienceSection
           icon="📣"
           title="For fans"
@@ -23,15 +29,19 @@ export function LandingPage() {
           icon="📋"
           title="For coaches"
           description="Register your team in minutes, from any phone."
-          delayMs={80}
         />
         <AudienceSection
           icon="🔎"
-          title="For scouts and sponsors"
+          title="For scouts"
           description="Discover talent, back a team, see the impact."
-          delayMs={160}
         />
       </div>
-    </div>
+
+      <div className="px-5 pb-10 sm:px-8">
+        <TrustedBySection />
+      </div>
+
+      <LandingFooter />
+    </SiteCard>
   )
 }

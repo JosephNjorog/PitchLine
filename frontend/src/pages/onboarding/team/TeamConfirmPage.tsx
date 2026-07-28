@@ -52,7 +52,7 @@ export function TeamConfirmPage() {
             />
           </>
         ) : (
-          <div className="flex flex-col gap-2 rounded-2xl bg-pitch-700/5 p-4">
+          <div className="flex flex-col gap-2 rounded-2xl bg-pitch-900/5 p-4">
             <p className="font-semibold text-ink-900">✅ Confirmation SMS sent</p>
             <p className="text-sm text-ink-500">
               "Your PitchLine team account is set up. Follow code: {teamDraft.name.slice(0, 3).toUpperCase()}
@@ -61,7 +61,7 @@ export function TeamConfirmPage() {
           </div>
         )}
       </div>
-      <div className="sticky bottom-0 border-t border-ink-500/10 bg-surface-50 px-4 py-3">
+      <div className="sticky bottom-0 border-t border-ink-500/10 bg-cream px-4 py-3">
         {!confirmed ? (
           <Button size="lg" className="w-full" disabled={phone.trim().length < 9} onClick={handleConfirm}>
             Confirm

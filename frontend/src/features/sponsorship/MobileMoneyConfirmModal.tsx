@@ -53,7 +53,7 @@ export function MobileMoneyConfirmModal({
       )}
       {stage === 'processing' && (
         <div className="flex flex-col items-center gap-3 py-6">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-pitch-700/20 border-t-pitch-700" />
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-pitch-900/20 border-t-pitch-900" />
           <p className="text-sm text-ink-500">Waiting for M-Pesa confirmation…</p>
         </div>
       )}

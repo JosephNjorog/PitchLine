@@ -13,7 +13,7 @@ export function Modal({ open, onClose, children, title }: ModalProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-ink-900/50 sm:items-center">
       <div
-        className="w-full max-w-md rounded-t-2xl bg-surface-0 p-6 shadow-card sm:rounded-2xl"
+        className="w-full max-w-md rounded-t-2xl border border-border bg-paper p-6 sm:rounded-2xl"
         role="dialog"
         aria-modal="true"
       >
@@ -23,7 +23,7 @@ export function Modal({ open, onClose, children, title }: ModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="ml-auto rounded-full p-1.5 text-ink-500 hover:bg-ink-900/5"
+            className="ml-auto rounded-full p-1.5 text-ink-500 hover:bg-sand"
           >
             ✕
           </button>
