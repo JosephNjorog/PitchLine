@@ -5,6 +5,7 @@ import { ActivityProvider } from './context/ActivityContext'
 import { OnboardingProvider } from './context/OnboardingContext'
 import { MyTeamProvider } from './context/MyTeamContext'
 import { TeamOpsProvider } from './context/TeamOpsContext'
+import { RosterProvider } from './context/RosterContext'
 import { MyOrgProvider } from './context/MyOrgContext'
 import { AdminFixturesProvider } from './context/AdminFixturesContext'
 import { NotificationsProvider } from './context/NotificationsContext'
@@ -19,15 +20,17 @@ function App() {
           <OnboardingProvider>
             <MyTeamProvider>
               <TeamOpsProvider>
-                <MyOrgProvider>
-                  <AdminFixturesProvider>
-                    <NotificationsProvider>
-                      <CommentsProvider>
-                        <RouterProvider router={router} />
-                      </CommentsProvider>
-                    </NotificationsProvider>
-                  </AdminFixturesProvider>
-                </MyOrgProvider>
+                <RosterProvider>
+                  <MyOrgProvider>
+                    <AdminFixturesProvider>
+                      <NotificationsProvider>
+                        <CommentsProvider>
+                          <RouterProvider router={router} />
+                        </CommentsProvider>
+                      </NotificationsProvider>
+                    </AdminFixturesProvider>
+                  </MyOrgProvider>
+                </RosterProvider>
               </TeamOpsProvider>
             </MyTeamProvider>
           </OnboardingProvider>
