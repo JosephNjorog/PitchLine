@@ -1,7 +1,26 @@
 import { Card } from '../../components/ui/Card'
+import { Avatar } from '../../components/ui/Avatar'
 import { LEADERBOARD_ENTRIES } from '../../mock-data'
 import { useAuth } from '../../context/AuthContext'
 import { useActivity } from '../../context/ActivityContext'
+
+const RANK_STYLES: Record<number, string> = {
+  1: 'bg-amber-500 text-white',
+  2: 'bg-ink-500/30 text-white',
+  3: 'bg-amber-800 text-white',
+}
+
+function RankBadge({ rank }: { rank: number }) {
+  return (
+    <span
+      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-black ${
+        RANK_STYLES[rank] ?? 'bg-sand text-ink-500'
+      }`}
+    >
+      {rank}
+    </span>
+  )
+}
 
 export function Leaderboard() {
   const { user } = useAuth()
@@ -13,21 +32,25 @@ export function Leaderboard() {
       {LEADERBOARD_ENTRIES.map((entry) => (
         <div
           key={entry.accountId}
-          className="flex items-center justify-between border-b border-ink-500/10 py-2.5 last:border-0"
+          className="flex items-center justify-between gap-3 border-b border-border py-3 last:border-0"
         >
           <div className="flex items-center gap-3">
-            <span className="w-5 text-sm font-bold text-ink-500">{entry.rank}</span>
-            <span className="text-sm font-medium text-ink-900">{entry.displayName}</span>
+            <RankBadge rank={entry.rank} />
+            <Avatar name={entry.displayName} size={30} />
+            <span className="text-sm font-semibold text-ink-900">{entry.displayName}</span>
           </div>
-          <span className="text-sm font-semibold text-pitch-900">{entry.points} pts</span>
+          <span className="text-sm font-black tabular-nums text-pitch-500">{entry.points} pts</span>
         </div>
       ))}
-      <div className="flex items-center justify-between pt-2.5">
+      <div className="flex items-center justify-between gap-3 pt-3">
         <div className="flex items-center gap-3">
-          <span className="w-5 text-sm font-bold text-ink-500">—</span>
-          <span className="text-sm font-medium text-ink-900">{user?.name ?? 'You'}</span>
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-pitch-900/10 text-xs font-black text-pitch-900">
+            —
+          </span>
+          <Avatar name={user?.name ?? 'You'} size={30} />
+          <span className="text-sm font-semibold text-ink-900">{user?.name ?? 'You'}</span>
         </div>
-        <span className="text-sm font-semibold text-pitch-900">{myPoints} pts</span>
+        <span className="text-sm font-black tabular-nums text-pitch-500">{myPoints} pts</span>
       </div>
     </Card>
   )
