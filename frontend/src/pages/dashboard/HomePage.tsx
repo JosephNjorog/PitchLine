@@ -1,19 +1,32 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Avatar } from '../../components/ui/Avatar'
 import { TeamQuickSearch } from '../../features/teams/TeamQuickSearch'
 import { NotificationsPanel } from '../../features/notifications/NotificationsPanel'
 import { FollowedResultsSection } from '../../features/matches/FollowedResultsSection'
 import { UpcomingFixturesSection } from '../../features/matches/UpcomingFixturesSection'
+import { SportFilterChips } from '../../features/matches/SportFilterChips'
 import { DiscoverTeamsRow } from '../../features/teams/DiscoverTeamsRow'
 import { Leaderboard } from '../../features/predictions/Leaderboard'
+import { getTeamById } from '../../mock-data'
 import { useAuth } from '../../context/AuthContext'
 import { useNotifications } from '../../context/NotificationsContext'
+import { useFollowedTeams } from '../../context/FollowedTeamsContext'
+import type { Sport } from '../../types'
 
 export function HomePage() {
   const { user } = useAuth()
   const { unreadCount } = useNotifications()
+  const { followedTeamIds } = useFollowedTeams()
   const [notificationsOpen, setNotificationsOpen] = useState(false)
+  const [sportFilter, setSportFilter] = useState<Sport | null>(null)
+
+  const followedSports = useMemo(() => {
+    const sports = followedTeamIds
+      .map((id) => getTeamById(id)?.sport)
+      .filter((sport): sport is Sport => Boolean(sport))
+    return Array.from(new Set(sports))
+  }, [followedTeamIds])
 
   return (
     <div className="flex flex-col gap-8">
@@ -36,8 +49,10 @@ export function HomePage() {
 
       <TeamQuickSearch />
 
-      <FollowedResultsSection />
-      <UpcomingFixturesSection />
+      <SportFilterChips sports={followedSports} selected={sportFilter} onSelect={setSportFilter} />
+
+      <FollowedResultsSection sport={sportFilter} />
+      <UpcomingFixturesSection sport={sportFilter} />
       <DiscoverTeamsRow />
 
       <section className="flex flex-col gap-3">
