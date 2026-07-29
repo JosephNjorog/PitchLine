@@ -6,8 +6,18 @@ import { PREDICTION_ROUNDS } from './predictionRounds'
 import { LEADERBOARD_ENTRIES } from './leaderboard'
 import { NOTIFICATIONS } from './notifications'
 import { MATCH_POLLS } from './polls'
+import { MATCH_COMMENTS } from './comments'
 
-export { TEAMS, FIXTURES, RESULTS, PREDICTION_ROUNDS, LEADERBOARD_ENTRIES, NOTIFICATIONS, MATCH_POLLS }
+export {
+  TEAMS,
+  FIXTURES,
+  RESULTS,
+  PREDICTION_ROUNDS,
+  LEADERBOARD_ENTRIES,
+  NOTIFICATIONS,
+  MATCH_POLLS,
+  MATCH_COMMENTS,
+}
 
 export const SPORTS: Sport[] = ['football', 'rugby', 'basketball', 'volleyball', 'netball', 'athletics']
 
