@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PageHeader } from '../../components/layout/PageHeader'
 import { Avatar } from '../../components/ui/Avatar'
@@ -5,15 +6,28 @@ import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { useMyTeam } from '../../context/MyTeamContext'
 import { useAuth } from '../../context/AuthContext'
+import { shareResult } from '../../lib/share'
 
 export function TeamProfilePage() {
   const navigate = useNavigate()
   const { myTeam } = useMyTeam()
   const { signOut } = useAuth()
+  const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle')
 
   function handleSignOut() {
     signOut()
     navigate('/', { replace: true })
+  }
+
+  async function handleShareCode() {
+    if (!myTeam?.followCode) return
+    const outcome = await shareResult(
+      `Follow ${myTeam.name} on PitchLine — use code ${myTeam.followCode} to find us.`,
+    )
+    if (outcome === 'copied') {
+      setShareStatus('copied')
+      setTimeout(() => setShareStatus('idle'), 2000)
+    }
   }
 
   if (!myTeam) return null
@@ -28,6 +42,19 @@ export function TeamProfilePage() {
           <p className="text-sm text-ink-500">{myTeam.county}</p>
         </div>
       </div>
+
+      <div className="px-4">
+        <Card className="flex items-center justify-between gap-3">
+          <div>
+            <p className="text-xs uppercase tracking-wide text-ink-500">Follow code</p>
+            <p className="text-xl font-bold tracking-widest text-ink-900">{myTeam.followCode}</p>
+          </div>
+          <Button size="md" onClick={handleShareCode}>
+            {shareStatus === 'copied' ? 'Copied!' : '📤 Share'}
+          </Button>
+        </Card>
+      </div>
+
       <div className="px-4">
         <Card className="flex flex-col gap-2 text-sm">
           <div className="flex justify-between">
@@ -46,6 +73,7 @@ export function TeamProfilePage() {
           )}
         </Card>
       </div>
+
       <div className="px-4">
         <Button variant="secondary" className="w-full" onClick={handleSignOut}>
           Sign out
