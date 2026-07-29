@@ -5,6 +5,7 @@ import { Logo } from '../ui/Logo'
 const TABS = [
   { to: '/institutional/discover', label: 'Discover' },
   { to: '/institutional/manage', label: 'Manage' },
+  { to: '/institutional/shortlist', label: 'Shortlist' },
   { to: '/institutional/account', label: 'Account' },
 ]
 
