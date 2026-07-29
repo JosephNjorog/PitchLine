@@ -11,7 +11,7 @@ export function TeamConfirmPage() {
   const navigate = useNavigate()
   const { teamDraft, updateTeamDraft, reset } = useOnboarding()
   const { user, completeOnboarding } = useAuth()
-  const { registerTeam } = useMyTeam()
+  const { myTeam, registerTeam } = useMyTeam()
   const [phone, setPhone] = useState(teamDraft.phone || user?.phone || '')
   const [confirmed, setConfirmed] = useState(false)
 
@@ -55,8 +55,7 @@ export function TeamConfirmPage() {
           <div className="flex flex-col gap-2 rounded-2xl bg-pitch-900/5 p-4">
             <p className="font-semibold text-ink-900">✅ Confirmation SMS sent</p>
             <p className="text-sm text-ink-500">
-              "Your PitchLine team account is set up. Follow code: {teamDraft.name.slice(0, 3).toUpperCase()}
-              {String(Date.now()).slice(-4)}. [PWA link]"
+              "Your PitchLine team account is set up. Follow code: {myTeam?.followCode}. [PWA link]"
             </p>
           </div>
         )}
