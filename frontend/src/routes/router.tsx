@@ -33,7 +33,9 @@ import { TeamProfilePage } from '../pages/dashboard/TeamProfilePage'
 import { TeamHomePage } from '../pages/team/TeamHomePage'
 import { TeamFixturesPage } from '../pages/team/TeamFixturesPage'
 import { NewFixturePage } from '../pages/team/NewFixturePage'
+import { EditFixturePage } from '../pages/team/EditFixturePage'
 import { SubmitResultPage } from '../pages/team/SubmitResultPage'
+import { RosterPage } from '../pages/team/RosterPage'
 import { FollowersPage } from '../pages/team/FollowersPage'
 import { TeamProfilePage as TeamOwnProfilePage } from '../pages/team/TeamProfilePage'
 
@@ -126,7 +128,9 @@ export const router = createBrowserRouter([
                           { path: '/team', element: <TeamHomePage /> },
                           { path: '/team/fixtures', element: <TeamFixturesPage /> },
                           { path: '/team/fixtures/new', element: <NewFixturePage /> },
+                          { path: '/team/fixtures/:id/edit', element: <EditFixturePage /> },
                           { path: '/team/fixtures/:id/result', element: <SubmitResultPage /> },
+                          { path: '/team/roster', element: <RosterPage /> },
                           { path: '/team/followers', element: <FollowersPage /> },
                           { path: '/team/profile', element: <TeamOwnProfilePage /> },
                         ],
