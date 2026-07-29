@@ -1,37 +1,37 @@
-import { createContext, useContext, type ReactNode } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
-import { MATCH_COMMENTS } from '../mock-data'
+import { createContext, useContext, useState, type ReactNode } from 'react'
+import { apiGet, apiPost } from '../lib/api'
 import type { MatchComment } from '../types'
 
 interface CommentsContextValue {
-  getCommentsForFixture: (fixtureId: string) => MatchComment[]
-  addComment: (fixtureId: string, authorName: string, message: string) => void
+  commentsByFixtureId: Record<string, MatchComment[]>
+  fetchComments: (fixtureId: string) => Promise<void>
+  addComment: (fixtureId: string, message: string) => Promise<void>
 }
 
 const CommentsContext = createContext<CommentsContextValue | null>(null)
 
 export function CommentsProvider({ children }: { children: ReactNode }) {
-  const [userComments, setUserComments] = useLocalStorage<MatchComment[]>('pitchline:comments', [])
+  const [commentsByFixtureId, setCommentsByFixtureId] = useState<Record<string, MatchComment[]>>({})
 
-  function getCommentsForFixture(fixtureId: string) {
-    return [...MATCH_COMMENTS, ...userComments]
-      .filter((comment) => comment.fixtureId === fixtureId)
-      .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+  async function fetchComments(fixtureId: string) {
+    try {
+      const comments = await apiGet<MatchComment[]>(`/fixtures/${fixtureId}/comments`, false)
+      setCommentsByFixtureId((prev) => ({ ...prev, [fixtureId]: comments }))
+    } catch {
+      // best-effort
+    }
   }
 
-  function addComment(fixtureId: string, authorName: string, message: string) {
-    const comment: MatchComment = {
-      id: `comment-${Date.now()}`,
-      fixtureId,
-      authorName,
-      message,
-      createdAt: new Date().toISOString(),
-    }
-    setUserComments((prev) => [...prev, comment])
+  async function addComment(fixtureId: string, message: string) {
+    const comment = await apiPost<MatchComment>(`/fixtures/${fixtureId}/comments`, { message })
+    setCommentsByFixtureId((prev) => ({
+      ...prev,
+      [fixtureId]: [...(prev[fixtureId] ?? []), comment],
+    }))
   }
 
   return (
-    <CommentsContext.Provider value={{ getCommentsForFixture, addComment }}>
+    <CommentsContext.Provider value={{ commentsByFixtureId, fetchComments, addComment }}>
       {children}
     </CommentsContext.Provider>
   )

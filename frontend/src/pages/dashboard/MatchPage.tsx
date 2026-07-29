@@ -7,17 +7,12 @@ import { MotmVote } from '../../features/matches/MotmVote'
 import { MatchPoll } from '../../features/matches/MatchPoll'
 import { MatchDiscussion } from '../../features/matches/MatchDiscussion'
 import { PredictionEntryPrompt } from '../../features/predictions/PredictionEntryPrompt'
-import {
-  getFixtureById,
-  getResultForFixture,
-  getTeamById,
-  getOpenPredictionRound,
-  getPollForFixture,
-} from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { shareResult } from '../../lib/share'
 
 export function MatchPage() {
   const { id } = useParams()
+  const { getFixtureById, getResultForFixture, getTeamById, getOpenPredictionRound, getPollForFixture } = useCatalog()
   const fixture = id ? getFixtureById(id) : undefined
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle')
 

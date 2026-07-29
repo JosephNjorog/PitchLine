@@ -1,5 +1,4 @@
-import { getTeamById } from '../mock-data'
-import type { Fixture, Result, Sport } from '../types'
+import type { Fixture, Result, Sport, Team } from '../types'
 
 export interface StandingsRow {
   teamId: string
@@ -16,6 +15,7 @@ export function computeStandings(
   fixtures: Fixture[],
   results: Result[],
   filter: { sport?: Sport; county?: string },
+  getTeamById: (id: string) => Team | undefined,
 ): StandingsRow[] {
   const rows = new Map<string, StandingsRow>()
 

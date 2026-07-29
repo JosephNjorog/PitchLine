@@ -4,20 +4,21 @@ import { Card } from '../../components/ui/Card'
 import { Input } from '../../components/ui/Input'
 import { ScoreStepper } from '../../components/ui/ScoreStepper'
 import { Toggle } from '../../components/ui/Toggle'
-import { TEAMS } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useMyOrg } from '../../context/MyOrgContext'
-import { useAdminFixtures } from '../../context/AdminFixturesContext'
+import { useTeamOps } from '../../context/TeamOpsContext'
 
 export function CreateFixtureForm() {
+  const { teams } = useCatalog()
   const { myOrg } = useMyOrg()
-  const { scheduleFixture } = useAdminFixtures()
+  const { createFixture } = useTeamOps()
 
   const eligibleTeams = useMemo(
     () =>
       myOrg && myOrg.jurisdictionTeamIds.length > 0
-        ? TEAMS.filter((t) => myOrg.jurisdictionTeamIds.includes(t.id))
-        : TEAMS,
-    [myOrg],
+        ? teams.filter((t) => myOrg.jurisdictionTeamIds.includes(t.id))
+        : teams,
+    [myOrg, teams],
   )
 
   const [homeTeamId, setHomeTeamId] = useState('')
@@ -28,28 +29,36 @@ export function CreateFixtureForm() {
   const [homeScore, setHomeScore] = useState(0)
   const [awayScore, setAwayScore] = useState(0)
   const [confirmation, setConfirmation] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   const canSubmit =
     homeTeamId.length > 0 && awayTeamId.length > 0 && homeTeamId !== awayTeamId && kickoffAt.length > 0
 
-  function handleSubmit() {
-    if (!canSubmit) return
-    scheduleFixture({
-      homeTeamId,
-      awayTeamId,
-      kickoffAt: new Date(kickoffAt).toISOString(),
-      venue: venue.trim() || 'TBD',
-      playedScore: alreadyPlayed ? { homeScore, awayScore } : undefined,
-    })
-    setConfirmation('Fixture scheduled.')
-    setHomeTeamId('')
-    setAwayTeamId('')
-    setKickoffAt('')
-    setVenue('')
-    setAlreadyPlayed(false)
-    setHomeScore(0)
-    setAwayScore(0)
-    setTimeout(() => setConfirmation(''), 3000)
+  async function handleSubmit() {
+    if (!canSubmit || submitting) return
+    setSubmitting(true)
+    try {
+      await createFixture(
+        homeTeamId,
+        awayTeamId,
+        new Date(kickoffAt).toISOString(),
+        venue.trim() || 'TBD',
+        alreadyPlayed ? { homeScore, awayScore } : undefined,
+      )
+      setConfirmation('Fixture scheduled.')
+      setHomeTeamId('')
+      setAwayTeamId('')
+      setKickoffAt('')
+      setVenue('')
+      setAlreadyPlayed(false)
+      setHomeScore(0)
+      setAwayScore(0)
+      setTimeout(() => setConfirmation(''), 3000)
+    } catch {
+      setConfirmation('Could not schedule that fixture — check both teams are in your jurisdiction.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -113,7 +122,7 @@ export function CreateFixtureForm() {
           <ScoreStepper value={awayScore} onChange={setAwayScore} />
         </div>
       )}
-      <Button disabled={!canSubmit} onClick={handleSubmit}>
+      <Button disabled={!canSubmit || submitting} onClick={handleSubmit}>
         Schedule fixture
       </Button>
       {confirmation && <p className="text-sm text-success">{confirmation}</p>}

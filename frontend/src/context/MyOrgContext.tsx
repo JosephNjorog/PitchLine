@@ -1,8 +1,9 @@
-import { createContext, useContext, type ReactNode } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { apiGet, apiPatch, apiPost, getToken } from '../lib/api'
 import type { Sport } from '../types'
 
 export interface MyOrg {
+  id: string
   name: string
   kind: 'scout' | 'league'
   focusSports: Sport[]
@@ -13,30 +14,55 @@ export interface MyOrg {
 
 interface MyOrgContextValue {
   myOrg: MyOrg | null
-  registerOrg: (details: Omit<MyOrg, 'jurisdictionTeamIds' | 'subscriptionStatus'>) => void
-  setJurisdictionTeams: (teamIds: string[]) => void
-  startTrial: () => void
+  myOrgLoading: boolean
+  registerOrg: (details: { name: string; kind: 'scout' | 'league'; focusSports: Sport[]; region: string }) => Promise<MyOrg>
+  setJurisdictionTeams: (teamIds: string[]) => Promise<void>
+  startTrial: () => Promise<void>
+  activateSubscription: () => Promise<void>
 }
 
 const MyOrgContext = createContext<MyOrgContextValue | null>(null)
 
 export function MyOrgProvider({ children }: { children: ReactNode }) {
-  const [myOrg, setMyOrg] = useLocalStorage<MyOrg | null>('pitchline:myOrg', null)
+  const [myOrg, setMyOrg] = useState<MyOrg | null>(null)
+  const [myOrgLoading, setMyOrgLoading] = useState(true)
 
-  function registerOrg(details: Omit<MyOrg, 'jurisdictionTeamIds' | 'subscriptionStatus'>) {
-    setMyOrg({ ...details, jurisdictionTeamIds: [], subscriptionStatus: 'trial' })
+  useEffect(() => {
+    if (!getToken()) {
+      setMyOrgLoading(false)
+      return
+    }
+    apiGet<MyOrg>('/orgs/me')
+      .then(setMyOrg)
+      .catch(() => {})
+      .finally(() => setMyOrgLoading(false))
+  }, [])
+
+  async function registerOrg(details: { name: string; kind: 'scout' | 'league'; focusSports: Sport[]; region: string }) {
+    const org = await apiPost<MyOrg>('/orgs', details)
+    setMyOrg(org)
+    return org
   }
 
-  function setJurisdictionTeams(teamIds: string[]) {
-    setMyOrg((prev) => (prev ? { ...prev, jurisdictionTeamIds: teamIds } : prev))
+  async function setJurisdictionTeams(teamIds: string[]) {
+    const org = await apiPatch<MyOrg>('/orgs/me/jurisdiction', { teamIds })
+    setMyOrg(org)
   }
 
-  function startTrial() {
+  async function startTrial() {
+    await apiPost('/orgs/me/trial/start')
     setMyOrg((prev) => (prev ? { ...prev, subscriptionStatus: 'trial' } : prev))
   }
 
+  async function activateSubscription() {
+    await apiPost('/orgs/me/subscription/activate')
+    setMyOrg((prev) => (prev ? { ...prev, subscriptionStatus: 'active' } : prev))
+  }
+
   return (
-    <MyOrgContext.Provider value={{ myOrg, registerOrg, setJurisdictionTeams, startTrial }}>
+    <MyOrgContext.Provider
+      value={{ myOrg, myOrgLoading, registerOrg, setJurisdictionTeams, startTrial, activateSubscription }}
+    >
       {children}
     </MyOrgContext.Provider>
   )

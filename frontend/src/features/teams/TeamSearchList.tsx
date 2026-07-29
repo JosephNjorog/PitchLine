@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { SearchBar } from '../../components/ui/SearchBar'
-import { searchTeams, getCounties } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { TeamListItem } from './TeamListItem'
 
 interface TeamSearchListProps {
@@ -9,12 +9,13 @@ interface TeamSearchListProps {
 }
 
 export function TeamSearchList({ selectedTeamIds, onToggle }: TeamSearchListProps) {
+  const { searchTeams, getCounties } = useCatalog()
   const [query, setQuery] = useState('')
   const [county, setCounty] = useState('')
-  const counties = useMemo(() => getCounties(), [])
+  const counties = useMemo(() => getCounties(), [getCounties])
   const results = useMemo(
     () => searchTeams(query, { county: county || undefined }),
-    [query, county],
+    [query, county, searchTeams],
   )
 
   return (

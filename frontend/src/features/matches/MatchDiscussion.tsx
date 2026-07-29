@@ -1,23 +1,32 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { formatRelativeTime } from '../../lib/date'
 import { useComments } from '../../context/CommentsContext'
-import { useAuth } from '../../context/AuthContext'
 
 export function MatchDiscussion({ fixtureId }: { fixtureId: string }) {
-  const { getCommentsForFixture, addComment } = useComments()
-  const { user } = useAuth()
+  const { commentsByFixtureId, fetchComments, addComment } = useComments()
   const [message, setMessage] = useState('')
+  const [posting, setPosting] = useState(false)
 
-  const comments = getCommentsForFixture(fixtureId)
+  useEffect(() => {
+    void fetchComments(fixtureId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fixtureId])
 
-  function handlePost() {
-    if (!message.trim()) return
-    addComment(fixtureId, user?.name ?? 'Fan', message.trim())
-    setMessage('')
+  const comments = commentsByFixtureId[fixtureId] ?? []
+
+  async function handlePost() {
+    if (!message.trim() || posting) return
+    setPosting(true)
+    try {
+      await addComment(fixtureId, message.trim())
+      setMessage('')
+    } finally {
+      setPosting(false)
+    }
   }
 
   return (
@@ -48,12 +57,12 @@ export function MatchDiscussion({ fixtureId }: { fixtureId: string }) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') handlePost()
+            if (e.key === 'Enter') void handlePost()
           }}
           placeholder="Add a comment..."
           className="flex-1 rounded-xl border border-transparent bg-sand px-3 py-2.5 text-sm text-ink-900 outline-none placeholder:text-ink-500 focus:border-pitch-900/30 focus:ring-2 focus:ring-pitch-900/15"
         />
-        <Button size="md" onClick={handlePost} disabled={!message.trim()}>
+        <Button size="md" onClick={handlePost} disabled={!message.trim() || posting}>
           Post
         </Button>
       </div>

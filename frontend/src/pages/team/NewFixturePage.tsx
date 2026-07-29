@@ -9,7 +9,7 @@ import { useTeamOps } from '../../context/TeamOpsContext'
 
 export function NewFixturePage() {
   const navigate = useNavigate()
-  const { myTeam } = useMyTeam()
+  const { myTeam, myTeamLoading } = useMyTeam()
   const { createFixture } = useTeamOps()
   const [opponentId, setOpponentId] = useState<string | null>(null)
   const [kickoffAt, setKickoffAt] = useState('')
@@ -17,14 +17,15 @@ export function NewFixturePage() {
 
   const selectedIds = useMemo(() => (opponentId ? [opponentId] : []), [opponentId])
 
+  if (myTeamLoading) return null
   if (!myTeam) return <Navigate to="/onboarding/team/details" replace />
 
   const canSubmit = Boolean(opponentId) && kickoffAt.length > 0 && venue.trim().length > 0
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!myTeam || !opponentId) return
     const kickoffIso = new Date(kickoffAt).toISOString()
-    createFixture(myTeam.id, opponentId, kickoffIso, venue.trim())
+    await createFixture(myTeam.id, opponentId, kickoffIso, venue.trim())
     navigate('/team/fixtures', { replace: true })
   }
 

@@ -2,24 +2,24 @@ import { useMemo, useState } from 'react'
 import { Card } from '../../components/ui/Card'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { ExportButton } from './ExportButton'
-import { FIXTURES, RESULTS, SPORTS, getCounties, getTeamById } from '../../mock-data'
+import { SPORTS } from '../../lib/sports'
 import { computeStandings } from '../../lib/standings'
-import { useAdminFixtures } from '../../context/AdminFixturesContext'
+import { useCatalog } from '../../context/CatalogContext'
 import type { Sport } from '../../types'
 
 export function StandingsTable() {
-  const { fixtures: adminFixtures, results: adminResults } = useAdminFixtures()
+  const { fixtures, resultsByFixtureId, getCounties, getTeamById } = useCatalog()
   const [sport, setSport] = useState<Sport | ''>('')
   const [county, setCounty] = useState('')
-  const counties = useMemo(() => getCounties(), [])
+  const counties = useMemo(() => getCounties(), [getCounties])
 
   const standings = useMemo(
     () =>
-      computeStandings([...FIXTURES, ...adminFixtures], [...RESULTS, ...adminResults], {
+      computeStandings(fixtures, Object.values(resultsByFixtureId), {
         sport: sport || undefined,
         county: county || undefined,
-      }),
-    [adminFixtures, adminResults, sport, county],
+      }, getTeamById),
+    [fixtures, resultsByFixtureId, sport, county, getTeamById],
   )
 
   const exportRows = standings.map((row, i) => {

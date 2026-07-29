@@ -4,14 +4,13 @@ import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { PredictionEntryForm } from '../../features/predictions/PredictionEntryForm'
-import { getFixtureById, getPredictionRoundById, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useActivity } from '../../context/ActivityContext'
-import { useAuth } from '../../context/AuthContext'
 
 export function PredictionEntryPage() {
   const { roundId } = useParams()
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { getFixtureById, getPredictionRoundById, getTeamById } = useCatalog()
   const { addPredictionEntry } = useActivity()
   const [homeScore, setHomeScore] = useState(1)
   const [awayScore, setAwayScore] = useState(1)
@@ -37,13 +36,8 @@ export function PredictionEntryPage() {
     )
   }
 
-  function handleSubmit() {
-    addPredictionEntry({
-      roundId: round!.id,
-      accountId: user?.id ?? 'guest',
-      predictedHomeScore: homeScore,
-      predictedAwayScore: awayScore,
-    })
+  async function handleSubmit() {
+    await addPredictionEntry(round!.id, homeScore, awayScore)
     setSubmitted(true)
   }
 

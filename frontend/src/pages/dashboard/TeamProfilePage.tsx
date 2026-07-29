@@ -4,11 +4,12 @@ import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { MatchCard } from '../../features/matches/MatchCard'
-import { getCompletedFixtures, getTeamById, getUpcomingFixtures } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useFollowedTeams } from '../../context/FollowedTeamsContext'
 
 export function TeamProfilePage() {
   const { id } = useParams()
+  const { getTeamById, getCompletedFixtures, getUpcomingFixtures } = useCatalog()
   const team = id ? getTeamById(id) : undefined
   const { isFollowing, follow, unfollow } = useFollowedTeams()
 

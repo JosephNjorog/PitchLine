@@ -2,14 +2,15 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { ExportButton } from '../../features/institutional/ExportButton'
 import { TeamResultCard } from '../../features/institutional/TeamResultCard'
 import { AthleteResultCard } from '../../features/institutional/AthleteResultCard'
-import { ATHLETES, TEAMS, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useShortlist } from '../../context/ShortlistContext'
 
 export function ShortlistPage() {
+  const { teams: allTeams, athletes: allAthletes, getTeamById } = useCatalog()
   const { shortlistedTeamIds, shortlistedAthleteIds } = useShortlist()
 
-  const teams = TEAMS.filter((team) => shortlistedTeamIds.includes(team.id))
-  const athletes = ATHLETES.filter((athlete) => shortlistedAthleteIds.includes(athlete.id))
+  const teams = allTeams.filter((team) => shortlistedTeamIds.includes(team.id))
+  const athletes = allAthletes.filter((athlete) => shortlistedAthleteIds.includes(athlete.id))
 
   const exportRows = [
     ...teams.map((t) => ({ type: 'team', name: t.name, county: t.county, sport: t.sport })),

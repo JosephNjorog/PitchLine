@@ -1,19 +1,20 @@
-import { FIXTURES, RESULTS, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { ScoreCard } from './ScoreCard'
 
-const FEATURED_FIXTURE_IDS = ['fixture-005', 'fixture-001']
-
 export function LiveScoreStrip() {
-  const featured = FEATURED_FIXTURE_IDS.map((id) => FIXTURES.find((f) => f.id === id)).filter(
-    (f) => f !== undefined,
-  )
+  const { fixtures, resultsByFixtureId, getTeamById } = useCatalog()
+
+  const featured = [...fixtures]
+    .filter((f) => f.status === 'live' || f.status === 'completed')
+    .sort((a, b) => new Date(b.kickoffAt).getTime() - new Date(a.kickoffAt).getTime())
+    .slice(0, 2)
 
   return (
     <div className="flex flex-col gap-3">
       {featured.map((fixture) => {
         const homeTeam = getTeamById(fixture.homeTeamId)
         const awayTeam = getTeamById(fixture.awayTeamId)
-        const result = RESULTS.find((r) => r.fixtureId === fixture.id)
+        const result = resultsByFixtureId[fixture.id]
         if (!homeTeam || !awayTeam) return null
         return (
           <ScoreCard

@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
-import { TEAMS } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useFollowedTeams } from '../../context/FollowedTeamsContext'
 
 const TRENDING_COUNT = 2
 
 export function DiscoverTeamsRow() {
+  const { teams } = useCatalog()
   const { followedTeamIds, follow } = useFollowedTeams()
-  const discoverable = TEAMS.filter((team) => !followedTeamIds.includes(team.id))
+  const discoverable = teams.filter((team) => !followedTeamIds.includes(team.id))
     .sort((a, b) => b.followerCount - a.followerCount)
     .slice(0, 8)
 

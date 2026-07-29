@@ -13,9 +13,11 @@ export function SubscriptionTrialPage() {
   const { registerOrg, startTrial } = useMyOrg()
 
   async function handleStartTrial() {
-    registerOrg({ name: orgDraft.name, kind: 'scout', focusSports: orgDraft.focusSports, region: orgDraft.region })
-    startTrial()
+    // completeOnboarding must land first: POST /orgs requires role=scout,
+    // which only exists server-side once onboarding sets it.
     await completeOnboarding('scout')
+    await registerOrg({ name: orgDraft.name, kind: 'scout', focusSports: orgDraft.focusSports, region: orgDraft.region })
+    await startTrial()
     reset()
     navigate('/institutional', { replace: true })
   }

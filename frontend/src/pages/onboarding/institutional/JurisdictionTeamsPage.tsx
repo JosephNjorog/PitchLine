@@ -13,9 +13,11 @@ export function JurisdictionTeamsPage() {
   const { registerOrg, setJurisdictionTeams } = useMyOrg()
 
   async function finish() {
-    registerOrg({ name: orgDraft.name, kind: 'league', focusSports: [], region: orgDraft.region })
-    setJurisdictionTeams(jurisdictionTeamIds)
+    // completeOnboarding must land first: POST /orgs requires role=league,
+    // which only exists server-side once onboarding sets it.
     await completeOnboarding('league')
+    await registerOrg({ name: orgDraft.name, kind: 'league', focusSports: [], region: orgDraft.region })
+    await setJurisdictionTeams(jurisdictionTeamIds)
     reset()
     navigate('/institutional', { replace: true })
   }

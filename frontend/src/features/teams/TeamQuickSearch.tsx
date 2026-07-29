@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Avatar } from '../../components/ui/Avatar'
 import { SearchBar } from '../../components/ui/SearchBar'
-import { searchTeams } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 
 export function TeamQuickSearch() {
   const navigate = useNavigate()
+  const { searchTeams } = useCatalog()
   const containerRef = useRef<HTMLDivElement>(null)
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)

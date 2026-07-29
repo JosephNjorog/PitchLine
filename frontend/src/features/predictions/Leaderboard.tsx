@@ -1,6 +1,6 @@
 import { Card } from '../../components/ui/Card'
 import { Avatar } from '../../components/ui/Avatar'
-import { LEADERBOARD_ENTRIES } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useAuth } from '../../context/AuthContext'
 import { useActivity } from '../../context/ActivityContext'
 
@@ -23,13 +23,14 @@ function RankBadge({ rank }: { rank: number }) {
 }
 
 export function Leaderboard() {
+  const { leaderboardEntries } = useCatalog()
   const { user } = useAuth()
   const { predictionEntries } = useActivity()
   const myPoints = predictionEntries.reduce((sum, entry) => sum + (entry.pointsAwarded ?? 0), 0)
 
   return (
     <Card className="flex flex-col gap-1">
-      {LEADERBOARD_ENTRIES.map((entry) => (
+      {leaderboardEntries.map((entry) => (
         <div
           key={entry.accountId}
           className="flex items-center justify-between gap-3 border-b border-border py-3 last:border-0"

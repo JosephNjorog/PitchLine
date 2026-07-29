@@ -1,7 +1,7 @@
 import { Card } from '../../components/ui/Card'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { formatKes } from '../../lib/currency'
-import { getFixtureById, getPredictionRoundById, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useActivity } from '../../context/ActivityContext'
 
 type TimelineItem =
@@ -9,6 +9,7 @@ type TimelineItem =
   | { kind: 'sponsorship'; id: string; at: string; label: string; amount: number }
 
 export function ActivityHistory() {
+  const { getFixtureById, getPredictionRoundById, getTeamById } = useCatalog()
   const { predictionEntries, sponsorships } = useActivity()
 
   const items: TimelineItem[] = [

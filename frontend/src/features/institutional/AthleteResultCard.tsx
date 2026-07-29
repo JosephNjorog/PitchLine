@@ -1,10 +1,11 @@
 import { Avatar } from '../../components/ui/Avatar'
 import { Badge } from '../../components/ui/Badge'
-import { getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useShortlist } from '../../context/ShortlistContext'
 import type { Athlete } from '../../types'
 
 export function AthleteResultCard({ athlete }: { athlete: Athlete }) {
+  const { getTeamById } = useCatalog()
   const team = getTeamById(athlete.teamId)
   const { isAthleteShortlisted, toggleAthlete } = useShortlist()
   const shortlisted = isAthleteShortlisted(athlete.id)
