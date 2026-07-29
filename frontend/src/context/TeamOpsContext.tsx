@@ -14,6 +14,7 @@ interface TeamOpsContextValue {
   fixtures: Fixture[]
   results: Result[]
   createFixture: (homeTeamId: string, opponentTeamId: string, kickoffAt: string, venue: string) => Fixture
+  updateFixture: (fixtureId: string, updates: { kickoffAt: string; venue: string }) => void
   submitResult: (fixtureId: string, input: SubmitResultInput) => Result
 }
 
@@ -34,6 +35,12 @@ export function TeamOpsProvider({ children }: { children: ReactNode }) {
     }
     setFixtures((prev) => [...prev, fixture])
     return fixture
+  }
+
+  function updateFixture(fixtureId: string, updates: { kickoffAt: string; venue: string }) {
+    setFixtures((prev) =>
+      prev.map((fixture) => (fixture.id === fixtureId ? { ...fixture, ...updates } : fixture)),
+    )
   }
 
   function submitResult(fixtureId: string, input: SubmitResultInput) {
@@ -57,7 +64,7 @@ export function TeamOpsProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <TeamOpsContext.Provider value={{ fixtures, results, createFixture, submitResult }}>
+    <TeamOpsContext.Provider value={{ fixtures, results, createFixture, updateFixture, submitResult }}>
       {children}
     </TeamOpsContext.Provider>
   )

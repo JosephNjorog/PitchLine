@@ -24,7 +24,9 @@ export function MatchCard({ fixture }: { fixture: Fixture }) {
       onKeyDown={(e) => {
         if (e.key === 'Enter') navigate(`/dashboard/match/${fixture.id}`)
       }}
-      className="flex w-full cursor-pointer flex-col gap-3 rounded-2xl bg-sand p-4 text-left"
+      className={`flex w-full cursor-pointer flex-col gap-3 rounded-2xl bg-sand p-4 text-left ${
+        fixture.status === 'live' ? 'live-pulse' : ''
+      }`}
     >
       <div className="flex items-center justify-between">
         <Badge tone={badgeTone}>{badgeLabel}</Badge>

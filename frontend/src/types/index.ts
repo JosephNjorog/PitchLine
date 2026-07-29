@@ -17,6 +17,24 @@ export interface Team {
   disabilityCategory?: string
   crestColor: string
   followerCount: number
+  followCode?: string
+}
+
+export interface Player {
+  id: string
+  name: string
+  position: string
+  jerseyNumber?: number
+}
+
+export type AgeGroup = 'U15' | 'U17' | 'U20' | 'Senior'
+
+export interface Athlete {
+  id: string
+  name: string
+  teamId: string
+  position: string
+  ageGroup: AgeGroup
 }
 
 export interface Fixture {
@@ -90,6 +108,29 @@ export interface Sponsorship {
   platformFeePct: number
   platformFeeAmount: number
   netToTeamAmount: number
+  createdAt: string
+}
+
+export interface MatchComment {
+  id: string
+  fixtureId: string
+  authorName: string
+  message: string
+  createdAt: string
+}
+
+export interface MatchPoll {
+  id: string
+  fixtureId: string
+  question: string
+  options: string[]
+  votes: Record<string, number>
+}
+
+export interface AppNotification {
+  id: string
+  type: 'result' | 'fixture' | 'prediction' | 'sponsorship'
+  message: string
   createdAt: string
 }
 

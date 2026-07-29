@@ -33,13 +33,16 @@ import { TeamProfilePage } from '../pages/dashboard/TeamProfilePage'
 import { TeamHomePage } from '../pages/team/TeamHomePage'
 import { TeamFixturesPage } from '../pages/team/TeamFixturesPage'
 import { NewFixturePage } from '../pages/team/NewFixturePage'
+import { EditFixturePage } from '../pages/team/EditFixturePage'
 import { SubmitResultPage } from '../pages/team/SubmitResultPage'
+import { RosterPage } from '../pages/team/RosterPage'
 import { FollowersPage } from '../pages/team/FollowersPage'
 import { TeamProfilePage as TeamOwnProfilePage } from '../pages/team/TeamProfilePage'
 
 import { IndexRedirect } from '../pages/institutional/IndexRedirect'
 import { DiscoverPage } from '../pages/institutional/DiscoverPage'
 import { ManagePage } from '../pages/institutional/ManagePage'
+import { ShortlistPage } from '../pages/institutional/ShortlistPage'
 import { AccountPage } from '../pages/institutional/AccountPage'
 
 import { NotFoundPage } from '../pages/NotFoundPage'
@@ -126,7 +129,9 @@ export const router = createBrowserRouter([
                           { path: '/team', element: <TeamHomePage /> },
                           { path: '/team/fixtures', element: <TeamFixturesPage /> },
                           { path: '/team/fixtures/new', element: <NewFixturePage /> },
+                          { path: '/team/fixtures/:id/edit', element: <EditFixturePage /> },
                           { path: '/team/fixtures/:id/result', element: <SubmitResultPage /> },
+                          { path: '/team/roster', element: <RosterPage /> },
                           { path: '/team/followers', element: <FollowersPage /> },
                           { path: '/team/profile', element: <TeamOwnProfilePage /> },
                         ],
@@ -154,6 +159,7 @@ export const router = createBrowserRouter([
                       { path: '/institutional', element: <IndexRedirect /> },
                       { path: '/institutional/discover', element: <DiscoverPage /> },
                       { path: '/institutional/manage', element: <ManagePage /> },
+                      { path: '/institutional/shortlist', element: <ShortlistPage /> },
                       { path: '/institutional/account', element: <AccountPage /> },
                     ],
                   },

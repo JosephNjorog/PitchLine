@@ -4,8 +4,16 @@ import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { LiveScoreHeader } from '../../features/matches/LiveScoreHeader'
 import { MotmVote } from '../../features/matches/MotmVote'
+import { MatchPoll } from '../../features/matches/MatchPoll'
+import { MatchDiscussion } from '../../features/matches/MatchDiscussion'
 import { PredictionEntryPrompt } from '../../features/predictions/PredictionEntryPrompt'
-import { getFixtureById, getResultForFixture, getTeamById, getOpenPredictionRound } from '../../mock-data'
+import {
+  getFixtureById,
+  getResultForFixture,
+  getTeamById,
+  getOpenPredictionRound,
+  getPollForFixture,
+} from '../../mock-data'
 import { shareResult } from '../../lib/share'
 
 export function MatchPage() {
@@ -19,6 +27,7 @@ export function MatchPage() {
   const awayTeam = getTeamById(fixture.awayTeamId)
   const result = getResultForFixture(fixture.id)
   const openRound = getOpenPredictionRound(fixture.id)
+  const poll = getPollForFixture(fixture.id)
 
   if (!homeTeam || !awayTeam) return <Navigate to="/dashboard" replace />
 
@@ -47,8 +56,10 @@ export function MatchPage() {
       />
       <LiveScoreHeader fixture={fixture} result={result} homeTeam={homeTeam} awayTeam={awayTeam} />
       <div className="flex flex-col gap-4 px-4">
+        {poll && <MatchPoll poll={poll} />}
         {openRound && <PredictionEntryPrompt round={openRound} />}
         {result && <MotmVote result={result} />}
+        <MatchDiscussion fixtureId={fixture.id} />
       </div>
     </div>
   )
