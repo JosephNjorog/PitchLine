@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/Button'
 import { LiveScoreHeader } from '../../features/matches/LiveScoreHeader'
 import { MotmVote } from '../../features/matches/MotmVote'
 import { MatchPoll } from '../../features/matches/MatchPoll'
+import { MatchDiscussion } from '../../features/matches/MatchDiscussion'
 import { PredictionEntryPrompt } from '../../features/predictions/PredictionEntryPrompt'
 import {
   getFixtureById,
@@ -58,6 +59,7 @@ export function MatchPage() {
         {poll && <MatchPoll poll={poll} />}
         {openRound && <PredictionEntryPrompt round={openRound} />}
         {result && <MotmVote result={result} />}
+        <MatchDiscussion fixtureId={fixture.id} />
       </div>
     </div>
   )
