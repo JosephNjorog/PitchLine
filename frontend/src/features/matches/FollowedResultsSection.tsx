@@ -1,11 +1,14 @@
 import { EmptyState } from '../../components/ui/EmptyState'
-import { getCompletedFixtures } from '../../mock-data'
+import { getCompletedFixtures, getTeamById } from '../../mock-data'
 import { useFollowedTeams } from '../../context/FollowedTeamsContext'
 import { MatchCard } from './MatchCard'
+import type { Sport } from '../../types'
 
-export function FollowedResultsSection() {
+export function FollowedResultsSection({ sport }: { sport?: Sport | null }) {
   const { followedTeamIds } = useFollowedTeams()
-  const fixtures = getCompletedFixtures(followedTeamIds)
+  const fixtures = getCompletedFixtures(followedTeamIds).filter(
+    (fixture) => !sport || getTeamById(fixture.homeTeamId)?.sport === sport,
+  )
 
   return (
     <section className="flex flex-col gap-3">
