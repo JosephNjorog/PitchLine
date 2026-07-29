@@ -9,39 +9,33 @@ import {
 import { AmountPicker } from '../../features/sponsorship/AmountPicker'
 import { MobileMoneyConfirmModal } from '../../features/sponsorship/MobileMoneyConfirmModal'
 import { useActivity } from '../../context/ActivityContext'
-import { useAuth } from '../../context/AuthContext'
-import type { Team } from '../../types'
-
-const PLATFORM_FEE_PCT = 0.1
+import type { Athlete, Team } from '../../types'
 
 export function SponsorPage() {
   const navigate = useNavigate()
-  const { user } = useAuth()
   const { addSponsorship } = useActivity()
   const [team, setTeam] = useState<Team | null>(null)
   const [targetType, setTargetType] = useState<SponsorTargetType>('team')
-  const [playerName, setPlayerName] = useState('')
+  const [athlete, setAthlete] = useState<Athlete | null>(null)
   const [amount, setAmount] = useState(100)
   const [modalOpen, setModalOpen] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  const targetLabel = targetType === 'team' ? team?.name : playerName.trim() || 'the player'
-  const canSend = Boolean(team) && amount > 0 && (targetType === 'team' || playerName.trim().length > 0)
+  const targetLabel = targetType === 'team' ? team?.name : (athlete?.name ?? 'the player')
+  const canSend = Boolean(team) && amount > 0 && (targetType === 'team' || athlete !== null)
 
-  function handleConfirmed() {
-    if (!team) return
-    const platformFeeAmount = Math.round(amount * PLATFORM_FEE_PCT)
-    const sponsorship = addSponsorship({
-      accountId: user?.id ?? 'guest',
-      targetType,
-      targetId: targetType === 'team' ? team.id : `${team.id}:${playerName.trim()}`,
-      targetLabel: targetLabel ?? team.name,
-      amount,
-      platformFeePct: PLATFORM_FEE_PCT,
-      platformFeeAmount,
-      netToTeamAmount: amount - platformFeeAmount,
-    })
-    setModalOpen(false)
-    navigate(`/dashboard/sponsor/receipt/${sponsorship.id}`)
+  async function handleConfirmed() {
+    if (!team || submitting) return
+    if (targetType === 'player' && !athlete) return
+    setSubmitting(true)
+    try {
+      const targetId = targetType === 'team' ? team.id : athlete!.id
+      const sponsorship = await addSponsorship(targetType, targetId, amount)
+      setModalOpen(false)
+      navigate(`/dashboard/sponsor/receipt/${sponsorship.id}`)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -53,8 +47,8 @@ export function SponsorPage() {
           onSelectTeam={setTeam}
           targetType={targetType}
           onTargetTypeChange={setTargetType}
-          playerName={playerName}
-          onPlayerNameChange={setPlayerName}
+          selectedAthlete={athlete}
+          onSelectAthlete={setAthlete}
         />
         {team && <AmountPicker amount={amount} onChange={setAmount} />}
         {team && (

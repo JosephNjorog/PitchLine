@@ -1,9 +1,10 @@
-import { getUpcomingFixtures, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useFollowedTeams } from '../../context/FollowedTeamsContext'
 import { MatchCard } from './MatchCard'
 import type { Sport } from '../../types'
 
 export function UpcomingFixturesSection({ sport }: { sport?: Sport | null }) {
+  const { getUpcomingFixtures, getTeamById } = useCatalog()
   const { followedTeamIds } = useFollowedTeams()
   const fixtures = getUpcomingFixtures(followedTeamIds).filter(
     (fixture) => !sport || getTeamById(fixture.homeTeamId)?.sport === sport,

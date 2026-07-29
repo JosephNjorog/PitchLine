@@ -17,7 +17,10 @@ export function TeamConfirmPage() {
 
   async function handleConfirm() {
     updateTeamDraft({ phone })
-    registerTeam({
+    // completeOnboarding must land first: POST /teams requires role=team,
+    // which only exists server-side once onboarding sets it.
+    await completeOnboarding('team')
+    await registerTeam({
       name: teamDraft.name,
       sport: teamDraft.sport,
       county: teamDraft.county,
@@ -25,7 +28,6 @@ export function TeamConfirmPage() {
       disabilityCategory: teamDraft.category === 'adaptive' ? teamDraft.disabilityCategory : undefined,
       crestColor: '#14532D',
     })
-    await completeOnboarding('team')
     setConfirmed(true)
   }
 

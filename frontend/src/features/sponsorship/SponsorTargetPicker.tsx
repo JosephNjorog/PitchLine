@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Avatar } from '../../components/ui/Avatar'
-import { Input } from '../../components/ui/Input'
 import { SearchBar } from '../../components/ui/SearchBar'
-import { searchTeams } from '../../mock-data'
-import type { Team } from '../../types'
+import { useCatalog } from '../../context/CatalogContext'
+import type { Athlete, Team } from '../../types'
 
 export type SponsorTargetType = 'team' | 'player'
 
@@ -12,8 +11,8 @@ interface SponsorTargetPickerProps {
   onSelectTeam: (team: Team) => void
   targetType: SponsorTargetType
   onTargetTypeChange: (type: SponsorTargetType) => void
-  playerName: string
-  onPlayerNameChange: (name: string) => void
+  selectedAthlete: Athlete | null
+  onSelectAthlete: (athlete: Athlete) => void
 }
 
 export function SponsorTargetPicker({
@@ -21,11 +20,16 @@ export function SponsorTargetPicker({
   onSelectTeam,
   targetType,
   onTargetTypeChange,
-  playerName,
-  onPlayerNameChange,
+  selectedAthlete,
+  onSelectAthlete,
 }: SponsorTargetPickerProps) {
+  const { searchTeams, athletes } = useCatalog()
   const [query, setQuery] = useState('')
-  const results = useMemo(() => searchTeams(query).slice(0, 8), [query])
+  const results = useMemo(() => searchTeams(query).slice(0, 8), [query, searchTeams])
+  const teamAthletes = useMemo(
+    () => (selectedTeam ? athletes.filter((a) => a.teamId === selectedTeam.id) : []),
+    [athletes, selectedTeam],
+  )
 
   if (!selectedTeam) {
     return (
@@ -84,12 +88,26 @@ export function SponsorTargetPicker({
         ))}
       </div>
       {targetType === 'player' && (
-        <Input
-          label="Player's name"
-          placeholder="e.g. Brian Otieno"
-          value={playerName}
-          onChange={(e) => onPlayerNameChange(e.target.value)}
-        />
+        <div className="flex flex-col gap-2">
+          {teamAthletes.length === 0 && (
+            <p className="text-sm text-ink-500">No registered players found for this team yet.</p>
+          )}
+          {teamAthletes.map((athlete) => (
+            <button
+              key={athlete.id}
+              type="button"
+              onClick={() => onSelectAthlete(athlete)}
+              className={`flex items-center justify-between rounded-xl border px-3 py-2.5 text-left text-sm ${
+                selectedAthlete?.id === athlete.id
+                  ? 'border-pitch-900 bg-pitch-900/5'
+                  : 'border-ink-500/15 bg-paper'
+              }`}
+            >
+              <span className="font-medium text-ink-900">{athlete.name}</span>
+              <span className="text-xs text-ink-500">{athlete.position}</span>
+            </button>
+          ))}
+        </div>
       )}
     </div>
   )

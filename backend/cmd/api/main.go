@@ -14,11 +14,20 @@ import (
 	"github.com/joho/godotenv"
 
 	"github.com/JosephNjorog/PitchLine/backend/internal/accounts"
+	"github.com/JosephNjorog/PitchLine/backend/internal/athletes"
 	"github.com/JosephNjorog/PitchLine/backend/internal/authn"
 	"github.com/JosephNjorog/PitchLine/backend/internal/config"
 	"github.com/JosephNjorog/PitchLine/backend/internal/db"
+	"github.com/JosephNjorog/PitchLine/backend/internal/fixtures"
 	"github.com/JosephNjorog/PitchLine/backend/internal/httpx"
+	"github.com/JosephNjorog/PitchLine/backend/internal/notifications"
+	"github.com/JosephNjorog/PitchLine/backend/internal/orgs"
+	"github.com/JosephNjorog/PitchLine/backend/internal/predictions"
+	"github.com/JosephNjorog/PitchLine/backend/internal/shortlist"
 	"github.com/JosephNjorog/PitchLine/backend/internal/sms"
+	"github.com/JosephNjorog/PitchLine/backend/internal/social"
+	"github.com/JosephNjorog/PitchLine/backend/internal/sponsorships"
+	"github.com/JosephNjorog/PitchLine/backend/internal/teams"
 )
 
 func main() {
@@ -65,6 +74,17 @@ func main() {
 	otpRepo := authn.NewOTPRepo(pool)
 	authMiddleware := authn.NewMiddleware(cfg.JWTSecret, accountsRepo)
 
+	teamsRepo := teams.NewRepository(pool)
+	athletesRepo := athletes.NewRepository(pool)
+	fixturesRepo := fixtures.NewRepository(pool)
+	predictionsRepo := predictions.NewRepository(pool)
+	sponsorshipsRepo := sponsorships.NewRepository(pool)
+	commentsRepo := social.NewCommentsRepository(pool)
+	pollsRepo := social.NewPollsRepository(pool)
+	notificationsRepo := notifications.NewRepository(pool)
+	orgsRepo := orgs.NewRepository(pool)
+	shortlistRepo := shortlist.NewRepository(pool)
+
 	r.Route("/api/v1", func(api chi.Router) {
 		accounts.Mount(api, accounts.Deps{
 			Repo:           accountsRepo,
@@ -76,6 +96,15 @@ func main() {
 			OTPDevMode:     cfg.OTPDelivery == "dev",
 			SMSSender:      smsSender,
 		})
+		teams.Mount(api, teams.Deps{Repo: teamsRepo, Middleware: authMiddleware})
+		athletes.Mount(api, athletes.Deps{Repo: athletesRepo})
+		fixtures.Mount(api, fixtures.Deps{Repo: fixturesRepo, Pool: pool, Middleware: authMiddleware})
+		predictions.Mount(api, predictions.Deps{Repo: predictionsRepo, Middleware: authMiddleware})
+		sponsorships.Mount(api, sponsorships.Deps{Repo: sponsorshipsRepo, Middleware: authMiddleware})
+		social.Mount(api, social.Deps{Comments: commentsRepo, Polls: pollsRepo, Pool: pool, Middleware: authMiddleware})
+		notifications.Mount(api, notifications.Deps{Repo: notificationsRepo, Middleware: authMiddleware})
+		orgs.Mount(api, orgs.Deps{Repo: orgsRepo, Middleware: authMiddleware})
+		shortlist.Mount(api, shortlist.Deps{Repo: shortlistRepo, Middleware: authMiddleware})
 	})
 
 	srv := &http.Server{

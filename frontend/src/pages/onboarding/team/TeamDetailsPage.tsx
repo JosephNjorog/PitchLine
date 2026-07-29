@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { TopBar } from '../../../components/layout/TopBar'
 import { Button } from '../../../components/ui/Button'
 import { Input } from '../../../components/ui/Input'
-import { SPORTS } from '../../../mock-data'
+import { SPORTS } from '../../../lib/sports'
 import { useOnboarding } from '../../../context/OnboardingContext'
 import type { Sport } from '../../../types'
 

@@ -4,10 +4,11 @@ import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { EmptyState } from '../../components/ui/EmptyState'
 import { formatKickoff } from '../../lib/date'
-import { getFixtureById, getOpenPredictionRounds, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 
 export function OpenRoundsList() {
   const navigate = useNavigate()
+  const { getFixtureById, getOpenPredictionRounds, getTeamById } = useCatalog()
   const rounds = getOpenPredictionRounds()
 
   if (rounds.length === 0) {

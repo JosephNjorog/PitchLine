@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { PageHeader } from '../../components/layout/PageHeader'
 import { Button } from '../../components/ui/Button'
 import { Input } from '../../components/ui/Input'
-import { getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useTeamOps } from '../../context/TeamOpsContext'
 
 function toDatetimeLocal(iso: string) {
@@ -15,20 +15,30 @@ function toDatetimeLocal(iso: string) {
 export function EditFixturePage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { fixtures, updateFixture } = useTeamOps()
+  const { getTeamById } = useCatalog()
+  const { fixtures, fixturesLoading, updateFixture } = useTeamOps()
   const fixture = fixtures.find((f) => f.id === id)
 
-  const [kickoffAt, setKickoffAt] = useState(fixture ? toDatetimeLocal(fixture.kickoffAt) : '')
-  const [venue, setVenue] = useState(fixture?.venue ?? '')
+  const [kickoffAt, setKickoffAt] = useState('')
+  const [venue, setVenue] = useState('')
 
+  useEffect(() => {
+    if (fixture) {
+      setKickoffAt(toDatetimeLocal(fixture.kickoffAt))
+      setVenue(fixture.venue ?? '')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fixture?.id])
+
+  if (fixturesLoading) return null
   if (!fixture) return <Navigate to="/team/fixtures" replace />
 
   const opponent = getTeamById(fixture.awayTeamId)
   const canSubmit = kickoffAt.length > 0 && venue.trim().length > 0
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!fixture) return
-    updateFixture(fixture.id, { kickoffAt: new Date(kickoffAt).toISOString(), venue: venue.trim() })
+    await updateFixture(fixture.id, { kickoffAt: new Date(kickoffAt).toISOString(), venue: venue.trim() })
     navigate('/team/fixtures', { replace: true })
   }
 

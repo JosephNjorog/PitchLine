@@ -7,7 +7,7 @@ import { useAuth } from '../../context/AuthContext'
 
 export function AccountPage() {
   const navigate = useNavigate()
-  const { myOrg } = useMyOrg()
+  const { myOrg, activateSubscription } = useMyOrg()
   const { signOut } = useAuth()
 
   function handleSignOut() {
@@ -44,6 +44,9 @@ export function AccountPage() {
           </div>
         )}
       </Card>
+      {myOrg.subscriptionStatus === 'trial' && (
+        <Button onClick={() => void activateSubscription()}>Upgrade to active subscription</Button>
+      )}
       <Button variant="secondary" onClick={handleSignOut}>
         Sign out
       </Button>

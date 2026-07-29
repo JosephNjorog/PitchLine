@@ -1,10 +1,11 @@
 import { Avatar } from '../../components/ui/Avatar'
 import { Button } from '../../components/ui/Button'
 import { EmptyState } from '../../components/ui/EmptyState'
-import { getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useFollowedTeams } from '../../context/FollowedTeamsContext'
 
 export function FollowedTeamsList() {
+  const { getTeamById } = useCatalog()
   const { followedTeamIds, unfollow } = useFollowedTeams()
   const teams = followedTeamIds.map((id) => getTeamById(id)).filter((t) => t !== undefined)
 

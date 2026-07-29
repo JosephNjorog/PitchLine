@@ -4,12 +4,13 @@ import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { formatKickoff } from '../../lib/date'
-import { getResultForFixture, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useTeamOps } from '../../context/TeamOpsContext'
 import type { Fixture } from '../../types'
 
 export function FixtureListItem({ fixture }: { fixture: Fixture }) {
   const navigate = useNavigate()
+  const { getResultForFixture, getTeamById } = useCatalog()
   const { results } = useTeamOps()
   const opponent = getTeamById(fixture.awayTeamId)
   const result = results.find((r) => r.fixtureId === fixture.id) ?? getResultForFixture(fixture.id)

@@ -1,18 +1,20 @@
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { PageHeader } from '../../components/layout/PageHeader'
 import { ResultForm } from '../../features/team/ResultForm'
-import { getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useMyTeam } from '../../context/MyTeamContext'
 import { useTeamOps } from '../../context/TeamOpsContext'
 
 export function SubmitResultPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { myTeam } = useMyTeam()
-  const { fixtures, submitResult } = useTeamOps()
+  const { getTeamById } = useCatalog()
+  const { myTeam, myTeamLoading } = useMyTeam()
+  const { fixtures, fixturesLoading, submitResult } = useTeamOps()
 
   const fixture = fixtures.find((f) => f.id === id)
 
+  if (myTeamLoading || fixturesLoading) return null
   if (!myTeam || !fixture) return <Navigate to="/team/fixtures" replace />
 
   const opponent = getTeamById(fixture.awayTeamId)
@@ -25,8 +27,8 @@ export function SubmitResultPage() {
         <ResultForm
           homeTeam={myTeam}
           awayTeam={opponent}
-          onSubmit={(result) => {
-            submitResult(fixture.id, result)
+          onSubmit={async (result) => {
+            await submitResult(fixture.id, result)
             navigate('/team', { replace: true })
           }}
         />

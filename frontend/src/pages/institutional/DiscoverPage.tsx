@@ -4,12 +4,14 @@ import { EmptyState } from '../../components/ui/EmptyState'
 import { ExportButton } from '../../features/institutional/ExportButton'
 import { TeamResultCard } from '../../features/institutional/TeamResultCard'
 import { AthleteResultCard } from '../../features/institutional/AthleteResultCard'
-import { SPORTS, getCounties, getPositions, getTeamById, searchTeams, searchAthletes } from '../../mock-data'
+import { SPORTS } from '../../lib/sports'
+import { useCatalog } from '../../context/CatalogContext'
 import type { AgeGroup, Sport } from '../../types'
 
 const AGE_GROUPS: AgeGroup[] = ['U15', 'U17', 'U20', 'Senior']
 
 export function DiscoverPage() {
+  const { getCounties, getPositions, getTeamById, searchTeams, searchAthletes } = useCatalog()
   const [mode, setMode] = useState<'teams' | 'athletes'>('teams')
   const [query, setQuery] = useState('')
   const [county, setCounty] = useState('')
@@ -17,13 +19,13 @@ export function DiscoverPage() {
   const [category, setCategory] = useState<'' | 'standard' | 'adaptive'>('')
   const [position, setPosition] = useState('')
   const [ageGroup, setAgeGroup] = useState<AgeGroup | ''>('')
-  const counties = useMemo(() => getCounties(), [])
-  const positions = useMemo(() => getPositions(), [])
+  const counties = useMemo(() => getCounties(), [getCounties])
+  const positions = useMemo(() => getPositions(), [getPositions])
 
   const teamResults = useMemo(() => {
     const base = searchTeams(query, { county: county || undefined, sport: sport || undefined })
     return category ? base.filter((t) => t.category === category) : base
-  }, [query, county, sport, category])
+  }, [query, county, sport, category, searchTeams])
 
   const athleteResults = useMemo(
     () =>
@@ -33,7 +35,7 @@ export function DiscoverPage() {
         position: position || undefined,
         ageGroup: ageGroup || undefined,
       }),
-    [query, county, sport, position, ageGroup],
+    [query, county, sport, position, ageGroup, searchAthletes],
   )
 
   const teamExportRows = teamResults.map((t) => ({

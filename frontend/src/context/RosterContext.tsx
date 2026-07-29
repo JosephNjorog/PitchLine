@@ -1,26 +1,36 @@
-import { createContext, useContext, type ReactNode } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { apiDelete, apiGet, apiPost, getToken } from '../lib/api'
 import type { Player } from '../types'
 
 interface RosterContextValue {
   players: Player[]
-  addPlayer: (name: string, position: string, jerseyNumber?: number) => Player
-  removePlayer: (id: string) => void
+  addPlayer: (name: string, position: string, jerseyNumber?: number) => Promise<Player>
+  removePlayer: (id: string) => Promise<void>
 }
 
 const RosterContext = createContext<RosterContextValue | null>(null)
 
 export function RosterProvider({ children }: { children: ReactNode }) {
-  const [players, setPlayers] = useLocalStorage<Player[]>('pitchline:roster', [])
+  const [players, setPlayers] = useState<Player[]>([])
 
-  function addPlayer(name: string, position: string, jerseyNumber?: number) {
-    const player: Player = { id: `player-${Date.now()}`, name, position, jerseyNumber }
+  useEffect(() => {
+    if (!getToken()) return
+    apiGet<Player[]>('/teams/me/players').then(setPlayers).catch(() => {})
+  }, [])
+
+  async function addPlayer(name: string, position: string, jerseyNumber?: number) {
+    const player = await apiPost<Player>('/teams/me/players', { name, position, jerseyNumber })
     setPlayers((prev) => [...prev, player])
     return player
   }
 
-  function removePlayer(id: string) {
+  async function removePlayer(id: string) {
     setPlayers((prev) => prev.filter((player) => player.id !== id))
+    try {
+      await apiDelete(`/teams/me/players/${id}`)
+    } catch {
+      // best-effort
+    }
   }
 
   return (

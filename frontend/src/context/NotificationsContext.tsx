@@ -1,33 +1,42 @@
-import { createContext, useContext, useMemo, type ReactNode } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
-import { NOTIFICATIONS } from '../mock-data'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { apiGet, apiPost, getToken } from '../lib/api'
 import type { AppNotification } from '../types'
+
+interface ApiNotification extends AppNotification {
+  readAt?: string
+}
 
 interface NotificationsContextValue {
   notifications: AppNotification[]
   unreadCount: number
   isRead: (id: string) => boolean
-  markAllRead: () => void
+  markAllRead: () => Promise<void>
 }
 
 const NotificationsContext = createContext<NotificationsContextValue | null>(null)
 
 export function NotificationsProvider({ children }: { children: ReactNode }) {
-  const [readIds, setReadIds] = useLocalStorage<string[]>('pitchline:readNotifications', [])
+  const [notifications, setNotifications] = useState<ApiNotification[]>([])
 
-  const notifications = useMemo(
-    () => [...NOTIFICATIONS].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()),
-    [],
-  )
+  useEffect(() => {
+    if (!getToken()) return
+    apiGet<ApiNotification[]>('/notifications').then(setNotifications).catch(() => {})
+  }, [])
 
-  const unreadCount = notifications.filter((n) => !readIds.includes(n.id)).length
+  const unreadCount = notifications.filter((n) => !n.readAt).length
 
   function isRead(id: string) {
-    return readIds.includes(id)
+    return notifications.find((n) => n.id === id)?.readAt != null
   }
 
-  function markAllRead() {
-    setReadIds(notifications.map((n) => n.id))
+  async function markAllRead() {
+    const now = new Date().toISOString()
+    setNotifications((prev) => prev.map((n) => ({ ...n, readAt: n.readAt ?? now })))
+    try {
+      await apiPost('/notifications/read-all')
+    } catch {
+      // best-effort
+    }
   }
 
   return (

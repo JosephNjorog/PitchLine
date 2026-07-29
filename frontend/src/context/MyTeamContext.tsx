@@ -1,35 +1,39 @@
-import { createContext, useContext, type ReactNode } from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { apiGet, apiPost, getToken } from '../lib/api'
 import type { Team } from '../types'
 
 interface MyTeamContextValue {
   myTeam: Team | null
-  registerTeam: (details: Omit<Team, 'id' | 'followerCount' | 'followCode'>) => Team
+  myTeamLoading: boolean
+  registerTeam: (details: Omit<Team, 'id' | 'followerCount' | 'followCode'>) => Promise<Team>
 }
 
 const MyTeamContext = createContext<MyTeamContextValue | null>(null)
 
-function generateFollowCode(name: string) {
-  const prefix = name.replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase().padEnd(3, 'X')
-  const suffix = String(Date.now()).slice(-4)
-  return `${prefix}${suffix}`
-}
-
 export function MyTeamProvider({ children }: { children: ReactNode }) {
-  const [myTeam, setMyTeam] = useLocalStorage<Team | null>('pitchline:myTeam', null)
+  const [myTeam, setMyTeam] = useState<Team | null>(null)
+  const [myTeamLoading, setMyTeamLoading] = useState(true)
 
-  function registerTeam(details: Omit<Team, 'id' | 'followerCount' | 'followCode'>) {
-    const team: Team = {
-      ...details,
-      id: `myteam-${Date.now()}`,
-      followerCount: 0,
-      followCode: generateFollowCode(details.name),
+  useEffect(() => {
+    if (!getToken()) {
+      setMyTeamLoading(false)
+      return
     }
+    apiGet<Team>('/me/team')
+      .then(setMyTeam)
+      .catch(() => {})
+      .finally(() => setMyTeamLoading(false))
+  }, [])
+
+  async function registerTeam(details: Omit<Team, 'id' | 'followerCount' | 'followCode'>) {
+    const team = await apiPost<Team>('/teams', details)
     setMyTeam(team)
     return team
   }
 
-  return <MyTeamContext.Provider value={{ myTeam, registerTeam }}>{children}</MyTeamContext.Provider>
+  return (
+    <MyTeamContext.Provider value={{ myTeam, myTeamLoading, registerTeam }}>{children}</MyTeamContext.Provider>
+  )
 }
 
 export function useMyTeam() {

@@ -2,11 +2,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Avatar } from '../../components/ui/Avatar'
 import { Badge } from '../../components/ui/Badge'
 import { formatKickoff, formatRelativeTime } from '../../lib/date'
-import { getResultForFixture, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import type { Fixture } from '../../types'
 
 export function MatchCard({ fixture }: { fixture: Fixture }) {
   const navigate = useNavigate()
+  const { getResultForFixture, getTeamById } = useCatalog()
   const homeTeam = getTeamById(fixture.homeTeamId)
   const awayTeam = getTeamById(fixture.awayTeamId)
   const result = getResultForFixture(fixture.id)

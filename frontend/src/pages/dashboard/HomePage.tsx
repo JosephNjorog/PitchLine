@@ -8,13 +8,14 @@ import { UpcomingFixturesSection } from '../../features/matches/UpcomingFixtures
 import { SportFilterChips } from '../../features/matches/SportFilterChips'
 import { DiscoverTeamsRow } from '../../features/teams/DiscoverTeamsRow'
 import { Leaderboard } from '../../features/predictions/Leaderboard'
-import { getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 import { useAuth } from '../../context/AuthContext'
 import { useNotifications } from '../../context/NotificationsContext'
 import { useFollowedTeams } from '../../context/FollowedTeamsContext'
 import type { Sport } from '../../types'
 
 export function HomePage() {
+  const { getTeamById } = useCatalog()
   const { user } = useAuth()
   const { unreadCount } = useNotifications()
   const { followedTeamIds } = useFollowedTeams()
@@ -26,7 +27,7 @@ export function HomePage() {
       .map((id) => getTeamById(id)?.sport)
       .filter((sport): sport is Sport => Boolean(sport))
     return Array.from(new Set(sports))
-  }, [followedTeamIds])
+  }, [followedTeamIds, getTeamById])
 
   return (
     <div className="flex flex-col gap-8">

@@ -1,9 +1,10 @@
 import { Avatar } from '../../components/ui/Avatar'
 import { Card } from '../../components/ui/Card'
 import { EmptyState } from '../../components/ui/EmptyState'
-import { getFixtureById, getResultForFixture, getSettledPredictionRounds, getTeamById } from '../../mock-data'
+import { useCatalog } from '../../context/CatalogContext'
 
 export function PastResultsList() {
+  const { getFixtureById, getResultForFixture, getSettledPredictionRounds, getTeamById } = useCatalog()
   const rounds = getSettledPredictionRounds()
 
   if (rounds.length === 0) {
