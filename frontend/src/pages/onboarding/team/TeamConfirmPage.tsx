@@ -15,7 +15,7 @@ export function TeamConfirmPage() {
   const [phone, setPhone] = useState(teamDraft.phone || user?.phone || '')
   const [confirmed, setConfirmed] = useState(false)
 
-  function handleConfirm() {
+  async function handleConfirm() {
     updateTeamDraft({ phone })
     registerTeam({
       name: teamDraft.name,
@@ -25,7 +25,7 @@ export function TeamConfirmPage() {
       disabilityCategory: teamDraft.category === 'adaptive' ? teamDraft.disabilityCategory : undefined,
       crestColor: '#14532D',
     })
-    completeOnboarding('team')
+    await completeOnboarding('team')
     setConfirmed(true)
   }
 

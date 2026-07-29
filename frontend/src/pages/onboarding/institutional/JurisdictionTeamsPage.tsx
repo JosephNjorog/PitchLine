@@ -12,10 +12,10 @@ export function JurisdictionTeamsPage() {
   const { completeOnboarding } = useAuth()
   const { registerOrg, setJurisdictionTeams } = useMyOrg()
 
-  function finish() {
+  async function finish() {
     registerOrg({ name: orgDraft.name, kind: 'league', focusSports: [], region: orgDraft.region })
     setJurisdictionTeams(jurisdictionTeamIds)
-    completeOnboarding('league')
+    await completeOnboarding('league')
     reset()
     navigate('/institutional', { replace: true })
   }

@@ -9,14 +9,18 @@ import { dashboardPathForRole } from '../../lib/roleRouting'
 
 export function OtpPage() {
   const navigate = useNavigate()
-  const { pendingPhone, verifyOtp, onboardingComplete, user } = useAuth()
+  const { pendingPhone, verifyOtp, onboardingComplete, user, otpDevCode } = useAuth()
   const [code, setCode] = useState('')
   const [error, setError] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
   if (!pendingPhone) return <Navigate to="/auth" replace />
 
-  function handleVerify() {
-    const ok = verifyOtp(code)
+  async function handleVerify() {
+    if (submitting) return
+    setSubmitting(true)
+    const ok = await verifyOtp(code)
+    setSubmitting(false)
     if (!ok) {
       setError(true)
       return
@@ -30,9 +34,8 @@ export function OtpPage() {
         <Logo size={56} />
         <div className="text-center">
           <h1 className="text-2xl font-bold text-ink-900">Enter the code</h1>
-          <p className="mt-1 text-ink-500">
-            Sent to {pendingPhone}. Demo mode: any 6 digits work, e.g. 123456.
-          </p>
+          <p className="mt-1 text-ink-500">Sent to {pendingPhone}.</p>
+          {otpDevCode && <p className="mt-1 text-sm text-ink-400">Dev mode code: {otpDevCode}</p>}
         </div>
 
         <div className="flex w-full flex-col gap-4">
@@ -48,8 +51,8 @@ export function OtpPage() {
             }}
           />
           {error && <p className="text-sm text-danger">Enter a valid 6-digit code.</p>}
-          <Button size="lg" onClick={handleVerify} disabled={code.length !== 6}>
-            Verify
+          <Button size="lg" onClick={handleVerify} disabled={code.length !== 6 || submitting}>
+            {submitting ? 'Verifying…' : 'Verify'}
           </Button>
         </div>
       </div>
