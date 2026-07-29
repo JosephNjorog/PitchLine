@@ -93,6 +93,13 @@ export interface Sponsorship {
   createdAt: string
 }
 
+export interface AppNotification {
+  id: string
+  type: 'result' | 'fixture' | 'prediction' | 'sponsorship'
+  message: string
+  createdAt: string
+}
+
 export interface Account {
   id: string
   name: string
