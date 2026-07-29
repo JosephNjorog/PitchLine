@@ -31,16 +31,16 @@ export function HomePage() {
   return (
     <div className="flex flex-col gap-8">
       <div className="flex items-center justify-between gap-3">
-        <h1 className="text-2xl font-bold text-ink-900">Your feed</h1>
+        <h1 className="text-3xl font-black tracking-tight text-ink-900">Your feed</h1>
         <button
           type="button"
           onClick={() => setNotificationsOpen(true)}
           aria-label="Open notifications"
           className="relative shrink-0"
         >
-          <Avatar name={user?.name ?? 'Fan'} size={36} />
+          <Avatar name={user?.name ?? 'Fan'} size={38} />
           {unreadCount > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-amber-600 px-1 text-[10px] font-bold text-white">
+            <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-amber-500 px-1 text-[10px] font-bold text-white ring-2 ring-cream">
               {unreadCount}
             </span>
           )}
@@ -56,15 +56,19 @@ export function HomePage() {
       <DiscoverTeamsRow />
 
       <section className="flex flex-col gap-3">
-        <h2 className="text-lg font-bold text-ink-900">Prediction leaderboard</h2>
+        <h2 className="text-lg font-black tracking-tight text-ink-900">Prediction leaderboard</h2>
         <Leaderboard />
       </section>
 
       <Link
         to="/dashboard/sponsor"
-        className="rounded-2xl bg-amber-tint px-5 py-4 text-center font-semibold text-ink-900 hover:opacity-90"
+        className="flex items-center justify-between gap-3 rounded-2xl bg-linear-to-r from-amber-500 to-amber-600 px-6 py-5 shadow-[0_8px_20px_rgba(217,119,6,0.3)] transition-transform hover:-translate-y-0.5"
       >
-        Back a player from KES 20
+        <div>
+          <p className="text-base font-black text-white">Back a player</p>
+          <p className="text-sm text-white/80">From as little as KES 20</p>
+        </div>
+        <span className="text-2xl">🤝</span>
       </Link>
 
       <NotificationsPanel open={notificationsOpen} onClose={() => setNotificationsOpen(false)} />
