@@ -5,11 +5,16 @@ import { Button } from '../../components/ui/Button'
 import { FollowedTeamsList } from '../../features/teams/FollowedTeamsList'
 import { NotificationPrefsToggle } from '../../features/profile/NotificationPrefsToggle'
 import { ActivityHistory } from '../../features/profile/ActivityHistory'
+import { BadgesSection } from '../../features/profile/BadgesSection'
 import { useAuth } from '../../context/AuthContext'
+import { useFollowedTeams } from '../../context/FollowedTeamsContext'
+import { useActivity } from '../../context/ActivityContext'
 
 export function ProfilePage() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
+  const { followedTeamIds } = useFollowedTeams()
+  const { predictionEntries, sponsorships } = useActivity()
 
   function handleSignOut() {
     signOut()
@@ -26,6 +31,17 @@ export function ProfilePage() {
           <p className="text-sm text-ink-500">{user?.email ?? user?.phone}</p>
         </div>
       </div>
+
+      <section className="flex flex-col gap-3 px-4">
+        <h2 className="text-sm font-bold uppercase tracking-wide text-ink-500">Badges</h2>
+        <BadgesSection
+          stats={{
+            followedCount: followedTeamIds.length,
+            predictionCount: predictionEntries.length,
+            sponsorshipCount: sponsorships.length,
+          }}
+        />
+      </section>
 
       <section className="flex flex-col gap-3 px-4">
         <h2 className="text-sm font-bold uppercase tracking-wide text-ink-500">Followed teams</h2>
