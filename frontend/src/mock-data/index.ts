@@ -5,8 +5,9 @@ import { RESULTS } from './results'
 import { PREDICTION_ROUNDS } from './predictionRounds'
 import { LEADERBOARD_ENTRIES } from './leaderboard'
 import { NOTIFICATIONS } from './notifications'
+import { MATCH_POLLS } from './polls'
 
-export { TEAMS, FIXTURES, RESULTS, PREDICTION_ROUNDS, LEADERBOARD_ENTRIES, NOTIFICATIONS }
+export { TEAMS, FIXTURES, RESULTS, PREDICTION_ROUNDS, LEADERBOARD_ENTRIES, NOTIFICATIONS, MATCH_POLLS }
 
 export const SPORTS: Sport[] = ['football', 'rugby', 'basketball', 'volleyball', 'netball', 'athletics']
 
@@ -73,6 +74,10 @@ export function getOpenPredictionRounds() {
 
 export function getSettledPredictionRounds() {
   return PREDICTION_ROUNDS.filter((round) => round.status === 'settled')
+}
+
+export function getPollForFixture(fixtureId: string) {
+  return MATCH_POLLS.find((poll) => poll.fixtureId === fixtureId)
 }
 
 export function getCounties() {
