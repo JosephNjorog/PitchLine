@@ -4,8 +4,9 @@ import { FIXTURES } from './fixtures'
 import { RESULTS } from './results'
 import { PREDICTION_ROUNDS } from './predictionRounds'
 import { LEADERBOARD_ENTRIES } from './leaderboard'
+import { NOTIFICATIONS } from './notifications'
 
-export { TEAMS, FIXTURES, RESULTS, PREDICTION_ROUNDS, LEADERBOARD_ENTRIES }
+export { TEAMS, FIXTURES, RESULTS, PREDICTION_ROUNDS, LEADERBOARD_ENTRIES, NOTIFICATIONS }
 
 export const SPORTS: Sport[] = ['football', 'rugby', 'basketball', 'volleyball', 'netball', 'athletics']
 
