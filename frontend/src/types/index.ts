@@ -93,6 +93,14 @@ export interface Sponsorship {
   createdAt: string
 }
 
+export interface MatchComment {
+  id: string
+  fixtureId: string
+  authorName: string
+  message: string
+  createdAt: string
+}
+
 export interface MatchPoll {
   id: string
   fixtureId: string
