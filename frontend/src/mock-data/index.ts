@@ -1,4 +1,4 @@
-import type { Sport } from '../types'
+import type { AgeGroup, Sport } from '../types'
 import { TEAMS } from './teams'
 import { FIXTURES } from './fixtures'
 import { RESULTS } from './results'
@@ -7,6 +7,7 @@ import { LEADERBOARD_ENTRIES } from './leaderboard'
 import { NOTIFICATIONS } from './notifications'
 import { MATCH_POLLS } from './polls'
 import { MATCH_COMMENTS } from './comments'
+import { ATHLETES } from './athletes'
 
 export {
   TEAMS,
@@ -17,6 +18,7 @@ export {
   NOTIFICATIONS,
   MATCH_POLLS,
   MATCH_COMMENTS,
+  ATHLETES,
 }
 
 export const SPORTS: Sport[] = ['football', 'rugby', 'basketball', 'volleyball', 'netball', 'athletics']
@@ -92,4 +94,32 @@ export function getPollForFixture(fixtureId: string) {
 
 export function getCounties() {
   return Array.from(new Set(TEAMS.map((team) => team.county))).sort()
+}
+
+export interface AthleteSearchFilters {
+  county?: string
+  sport?: Sport
+  position?: string
+  ageGroup?: AgeGroup
+}
+
+export function searchAthletes(query: string, filters: AthleteSearchFilters = {}) {
+  const q = query.trim().toLowerCase()
+  return ATHLETES.filter((athlete) => {
+    const team = getTeamById(athlete.teamId)
+    if (!team) return false
+    const matchesQuery =
+      q.length === 0 ||
+      athlete.name.toLowerCase().includes(q) ||
+      team.name.toLowerCase().includes(q)
+    const matchesCounty = !filters.county || team.county === filters.county
+    const matchesSport = !filters.sport || team.sport === filters.sport
+    const matchesPosition = !filters.position || athlete.position === filters.position
+    const matchesAgeGroup = !filters.ageGroup || athlete.ageGroup === filters.ageGroup
+    return matchesQuery && matchesCounty && matchesSport && matchesPosition && matchesAgeGroup
+  })
+}
+
+export function getPositions() {
+  return Array.from(new Set(ATHLETES.map((athlete) => athlete.position))).sort()
 }
