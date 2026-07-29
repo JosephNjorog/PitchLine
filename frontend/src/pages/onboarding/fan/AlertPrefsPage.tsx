@@ -15,9 +15,9 @@ export function AlertPrefsPage() {
   const { completeOnboarding } = useAuth()
   const [alertPreference, setAlertPreference] = useAlertPreference()
 
-  function handleFinish() {
+  async function handleFinish() {
     followMany(selectedTeamIds)
-    completeOnboarding('fan')
+    await completeOnboarding('fan')
     reset()
     navigate('/dashboard', { replace: true })
   }

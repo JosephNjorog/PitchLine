@@ -12,10 +12,10 @@ export function SubscriptionTrialPage() {
   const { completeOnboarding } = useAuth()
   const { registerOrg, startTrial } = useMyOrg()
 
-  function handleStartTrial() {
+  async function handleStartTrial() {
     registerOrg({ name: orgDraft.name, kind: 'scout', focusSports: orgDraft.focusSports, region: orgDraft.region })
     startTrial()
-    completeOnboarding('scout')
+    await completeOnboarding('scout')
     reset()
     navigate('/institutional', { replace: true })
   }
