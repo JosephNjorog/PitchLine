@@ -42,6 +42,7 @@ import { TeamProfilePage as TeamOwnProfilePage } from '../pages/team/TeamProfile
 import { IndexRedirect } from '../pages/institutional/IndexRedirect'
 import { DiscoverPage } from '../pages/institutional/DiscoverPage'
 import { ManagePage } from '../pages/institutional/ManagePage'
+import { ShortlistPage } from '../pages/institutional/ShortlistPage'
 import { AccountPage } from '../pages/institutional/AccountPage'
 
 import { NotFoundPage } from '../pages/NotFoundPage'
@@ -158,6 +159,7 @@ export const router = createBrowserRouter([
                       { path: '/institutional', element: <IndexRedirect /> },
                       { path: '/institutional/discover', element: <DiscoverPage /> },
                       { path: '/institutional/manage', element: <ManagePage /> },
+                      { path: '/institutional/shortlist', element: <ShortlistPage /> },
                       { path: '/institutional/account', element: <AccountPage /> },
                     ],
                   },
