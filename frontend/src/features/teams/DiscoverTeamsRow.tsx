@@ -23,7 +23,7 @@ export function DiscoverTeamsRow() {
         {discoverable.map((team, i) => (
           <div
             key={team.id}
-            className="relative flex w-36 shrink-0 flex-col items-center gap-2 rounded-2xl border border-border bg-paper p-3 text-center"
+            className="relative flex w-36 shrink-0 flex-col items-center gap-2 rounded-2xl border border-border bg-paper p-3 text-center shadow-(--shadow-xs) transition-all hover:-translate-y-0.5 hover:shadow-(--shadow-md)"
           >
             {i < TRENDING_COUNT && (
               <span className="absolute left-2 top-2 rounded-full bg-amber-tint px-2 py-0.5 text-[10px] font-semibold text-amber-600">

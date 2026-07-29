@@ -15,7 +15,7 @@ export function TeamDashboardLayout() {
   return (
     <SiteCard maxWidth="1200px" fullHeight>
       <div className="flex flex-1 flex-col md:flex-row">
-        <SidebarNav tabs={TABS} />
+        <SidebarNav tabs={TABS} activeClassName="bg-amber-600 text-white shadow-[0_4px_14px_rgba(217,119,6,0.3)]" />
         <div className="flex flex-1 flex-col">
           <main className="flex-1 overflow-y-auto">
             <div className="mx-auto w-full max-w-2xl px-5 py-8 sm:px-8">

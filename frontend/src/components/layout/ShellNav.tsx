@@ -17,7 +17,7 @@ export function ShellNav({ tabs, activeClassName = 'text-pitch-900' }: { tabs: S
             to={tab.to}
             end={tab.end}
             className={({ isActive }) =>
-              `flex-1 py-3.5 text-center text-sm font-medium ${isActive ? activeClassName : 'text-ink-500'}`
+              `flex-1 py-3.5 text-center text-sm transition-colors ${isActive ? `font-bold ${activeClassName}` : 'font-medium text-ink-500'}`
             }
           >
             {tab.label}
