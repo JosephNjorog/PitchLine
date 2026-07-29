@@ -93,6 +93,14 @@ export interface Sponsorship {
   createdAt: string
 }
 
+export interface MatchPoll {
+  id: string
+  fixtureId: string
+  question: string
+  options: string[]
+  votes: Record<string, number>
+}
+
 export interface AppNotification {
   id: string
   type: 'result' | 'fixture' | 'prediction' | 'sponsorship'
