@@ -23,7 +23,9 @@ export function LiveScoreHeader({ fixture, result, homeTeam, awayTeam }: LiveSco
           <Avatar name={homeTeam.name} color={homeTeam.crestColor} size={48} />
           <span className="text-center text-sm font-semibold">{homeTeam.name}</span>
         </div>
-        <span className="px-3 text-3xl font-extrabold">
+        <span
+          className={`rounded-2xl px-3 text-3xl font-extrabold ${fixture.status === 'live' ? 'live-pulse' : ''}`}
+        >
           {result ? `${result.homeScore} - ${result.awayScore}` : 'vs'}
         </span>
         <div className="flex flex-1 flex-col items-center gap-2">
