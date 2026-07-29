@@ -7,6 +7,7 @@ import { MyTeamProvider } from './context/MyTeamContext'
 import { TeamOpsProvider } from './context/TeamOpsContext'
 import { MyOrgProvider } from './context/MyOrgContext'
 import { AdminFixturesProvider } from './context/AdminFixturesContext'
+import { NotificationsProvider } from './context/NotificationsContext'
 import { router } from './routes/router'
 
 function App() {
@@ -19,7 +20,9 @@ function App() {
               <TeamOpsProvider>
                 <MyOrgProvider>
                   <AdminFixturesProvider>
-                    <RouterProvider router={router} />
+                    <NotificationsProvider>
+                      <RouterProvider router={router} />
+                    </NotificationsProvider>
                   </AdminFixturesProvider>
                 </MyOrgProvider>
               </TeamOpsProvider>
