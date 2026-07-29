@@ -32,9 +32,18 @@ export function FixtureListItem({ fixture }: { fixture: Fixture }) {
         )}
       </div>
       {fixture.status !== 'completed' && (
-        <Button size="md" onClick={() => navigate(`/team/fixtures/${fixture.id}/result`)}>
-          Submit result
-        </Button>
+        <div className="flex gap-2">
+          <Button size="md" className="flex-1" onClick={() => navigate(`/team/fixtures/${fixture.id}/result`)}>
+            Submit result
+          </Button>
+          <Button
+            variant="secondary"
+            size="md"
+            onClick={() => navigate(`/team/fixtures/${fixture.id}/edit`)}
+          >
+            Edit
+          </Button>
+        </div>
       )}
     </Card>
   )
