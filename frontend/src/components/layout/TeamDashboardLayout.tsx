@@ -6,6 +6,7 @@ import { ShellNav, type ShellNavTab } from './ShellNav'
 const TABS: ShellNavTab[] = [
   { to: '/team', label: 'Home', end: true },
   { to: '/team/fixtures', label: 'Fixtures' },
+  { to: '/team/roster', label: 'Roster' },
   { to: '/team/followers', label: 'Followers' },
   { to: '/team/profile', label: 'Team' },
 ]
