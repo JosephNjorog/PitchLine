@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS motm_votes;
+DROP TABLE IF EXISTS result_cards;
+DROP TABLE IF EXISTS result_scorers;
+DROP TABLE IF EXISTS results;
