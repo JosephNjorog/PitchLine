@@ -17,6 +17,14 @@ export interface Team {
   disabilityCategory?: string
   crestColor: string
   followerCount: number
+  followCode?: string
+}
+
+export interface Player {
+  id: string
+  name: string
+  position: string
+  jerseyNumber?: number
 }
 
 export interface Fixture {
