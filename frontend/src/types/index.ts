@@ -27,6 +27,16 @@ export interface Player {
   jerseyNumber?: number
 }
 
+export type AgeGroup = 'U15' | 'U17' | 'U20' | 'Senior'
+
+export interface Athlete {
+  id: string
+  name: string
+  teamId: string
+  position: string
+  ageGroup: AgeGroup
+}
+
 export interface Fixture {
   id: string
   homeTeamId: string
